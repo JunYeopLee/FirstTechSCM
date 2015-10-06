@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">FirstTechSCM</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_nfctagging">NFCTaggingActivity</string>
+    <string name="title_activity_splash">SplashActivity</string>
+
+    <string name="server_url">http://166.104.142.190:50000/ftscm/</string>
+    <string name="query_login">http://166.104.142.190:50000/ftscm/user/login</string>
+    <string name="query_logout">http://166.104.142.190:50000/ftscm/user/logout</string>
+</resources>
