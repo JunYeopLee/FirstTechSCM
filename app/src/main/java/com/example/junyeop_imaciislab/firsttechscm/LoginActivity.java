@@ -155,6 +155,14 @@ public class LoginActivity extends Activity {
                         alert.show();
                     }
                 });
+
+                /**
+                 * FOR TEST
+                 */
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out);
+                finish();
             }
 
             //////
@@ -170,8 +178,8 @@ public class LoginActivity extends Activity {
                     if(finalResult.getBoolean("success")==true) {
                         LoginSharedPreferencesEditor = LoginSharedPreferences.edit();
 
-                        LoginSharedPreferencesEditor.putString("userID", urls[1]);
-                        LoginSharedPreferencesEditor.putString("userPW", urls[2]);
+                        LoginSharedPreferencesEditor.putString("username", urls[1]);
+                        LoginSharedPreferencesEditor.putString("password", urls[2]);
                         LoginSharedPreferencesEditor.commit();
 
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
