@@ -1,34 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.junyeop_imaciislab.firsttechscm" >
-    <uses-permission android:name="android.permission.NFC"/>
-    <uses-feature android:name="android.hardware.nfc" android:required="true"/>
+
+    <uses-permission android:name="android.permission.NFC" />
+
+    <uses-feature
+        android:name="android.hardware.nfc"
+        android:required="true" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".MainActivity"
+            android:name=".activity.MainActivity"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" >
         </activity>
         <activity
-            android:name=".LoginActivity"
+            android:name=".activity.LoginActivity"
             android:label="@string/title_activity_login"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" >
         </activity>
         <activity
-            android:name=".NFCTaggingActivity"
+            android:name=".activity.NFCTaggingActivity"
             android:label="@string/title_activity_nfctagging"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" >
             <intent-filter>
-                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
+                <action android:name="android.nfc.action.TAG_DISCOVERED" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".SplashActivity"
+            android:name=".activity.SplashActivity"
             android:label="@string/title_activity_splash"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" >
             <intent-filter>
@@ -38,20 +44,21 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".TagReadActivity"
+            android:name=".activity.TagReadActivity"
             android:label="@string/title_activity_tag_read" >
         </activity>
         <activity
-            android:name=".TagWriteActivity"
+            android:name=".activity.TagWriteActivity"
             android:label="@string/title_activity_tag_write" >
         </activity>
         <activity
-            android:name=".TagHistoryActivity"
+            android:name=".activity.TagHistoryActivity"
             android:label="@string/title_activity_tag_history" >
         </activity>
         <activity
-            android:name=".CheckInventoryActivity"
+            android:name=".activity.CheckInventoryActivity"
             android:label="@string/title_activity_check_inventory" >
         </activity>
     </application>
+
 </manifest>

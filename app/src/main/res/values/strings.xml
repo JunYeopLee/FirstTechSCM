@@ -6,12 +6,15 @@
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_nfctagging">NFCTaggingActivity</string>
     <string name="title_activity_splash">SplashActivity</string>
-
-    <string name="server_url">http://166.104.142.190:50000/ftscm/</string>
-    <string name="query_login">http://166.104.142.190:50000/ftscm/user/login</string>
-    <string name="query_logout">http://166.104.142.190:50000/ftscm/user/logout</string>
     <string name="title_activity_tag_read">TagReadActivity</string>
     <string name="title_activity_tag_write">TagWriteActivity</string>
     <string name="title_activity_tag_history">TagHistoryActivity</string>
     <string name="title_activity_check_inventory">CheckInventoryActivity</string>
+
+    <string name="server_url">http://166.104.142.190:50000/ftscm/</string>
+    <string name="query_login">http://166.104.142.190:50000/ftscm/user/login</string>
+    <string name="query_logout">http://166.104.142.190:50000/ftscm/user/logout</string>
+    <string name="title_activity_nfctest">NFCtest</string>
+    <string name="title_activity_tag_viewer">TagViewer</string>
+    <string name="title_activity_ndef_message_parser">NdefMessageParser</string>
 </resources>
