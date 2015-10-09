@@ -6,7 +6,7 @@
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_nfctagging">NFCTaggingActivity</string>
     <string name="title_activity_splash">SplashActivity</string>
-    <string name="title_activity_tag_read">TagReadActivity</string>
+    <string name="title_activity_tag_read">태그 조회</string>
     <string name="title_activity_tag_write">TagWriteActivity</string>
     <string name="title_activity_tag_history">TagHistoryActivity</string>
     <string name="title_activity_check_inventory">CheckInventoryActivity</string>
