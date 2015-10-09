@@ -81,7 +81,6 @@ public class NFCTaggingActivity extends Activity {
             }
         });
         builder.create().show();
-        return;
     }
 
     private void resolveIntent(Intent intent) {
@@ -96,12 +95,12 @@ public class NFCTaggingActivity extends Activity {
 
             if(activityToGo.compareTo("write")==0) {
                 Intent writeIntent = new Intent(NFCTaggingActivity.this, com.example.junyeop_imaciislab.firsttechscm.TagWriteActivity.class);
-                writeIntent.putExtra("NFCtag", getHex(id).toString());
+                writeIntent.putExtra("NFCtagID", getHex(id));
                 startActivity(writeIntent);
                 finish();
             } else {
                 Intent readIntent = new Intent(NFCTaggingActivity.this, com.example.junyeop_imaciislab.firsttechscm.TagReadActivity.class);
-                readIntent.putExtra("NFCtag", getHex(id).toString());
+                readIntent.putExtra("NFCtagID", getHex(id));
                 startActivity(readIntent);
                 finish();
             }
