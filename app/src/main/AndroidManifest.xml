@@ -3,6 +3,7 @@
     package="com.example.junyeop_imaciislab.firsttechscm" >
 
     <uses-permission android:name="android.permission.NFC" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <uses-feature
         android:name="android.hardware.nfc"
@@ -14,17 +15,17 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".activity.MainActivity"
+            android:name=".MainActivity"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" >
         </activity>
         <activity
-            android:name=".activity.LoginActivity"
+            android:name=".LoginActivity"
             android:label="@string/title_activity_login"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" >
         </activity>
         <activity
-            android:name=".activity.NFCTaggingActivity"
+            android:name=".NFCTaggingActivity"
             android:label="@string/title_activity_nfctagging"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" >
             <intent-filter>
@@ -34,7 +35,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.SplashActivity"
+            android:name=".SplashActivity"
             android:label="@string/title_activity_splash"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" >
             <intent-filter>
@@ -44,19 +45,19 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.TagReadActivity"
+            android:name=".TagReadActivity"
             android:label="@string/title_activity_tag_read" >
         </activity>
         <activity
-            android:name=".activity.TagWriteActivity"
+            android:name=".TagWriteActivity"
             android:label="@string/title_activity_tag_write" >
         </activity>
         <activity
-            android:name=".activity.TagHistoryActivity"
+            android:name=".TagHistoryActivity"
             android:label="@string/title_activity_tag_history" >
         </activity>
         <activity
-            android:name=".activity.CheckInventoryActivity"
+            android:name=".CheckInventoryActivity"
             android:label="@string/title_activity_check_inventory" >
         </activity>
     </application>

@@ -28,8 +28,6 @@ public class NFCTaggingActivity extends Activity {
 
         Toast.makeText(this, activityToGo, Toast.LENGTH_LONG).show();
 
-
-
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
         if(mNfcAdapter==null) {
             AlertDialog.Builder alert = new AlertDialog.Builder(NFCTaggingActivity.this);
@@ -42,25 +40,6 @@ public class NFCTaggingActivity extends Activity {
             alert.setMessage("NFC TAG를 사용할 수 없는 기기입니다");
             alert.show();
             finish();
-        } else if(!mNfcAdapter.isEnabled()) {
-            AlertDialog.Builder alert = new AlertDialog.Builder(NFCTaggingActivity.this);
-            alert.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    if (mNfcAdapter == null) return;
-                    Intent intent = new Intent( Settings.ACTION_NFC_SETTINGS );
-                    startActivity(intent);
-                    dialog.dismiss();
-                }
-            });
-            alert.setNegativeButton("취소", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-            alert.setMessage("NFC TAG 설정창으로 이동하시겠습니까?");
-            alert.show();
         }
 
         mPendingIntent = PendingIntent.getActivity(this, 0,

@@ -21,17 +21,18 @@ import org.apache.http.HttpStatus;
 import org.apache.http.StatusLine;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.HttpConnectionParams;
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 
 public class LoginActivity extends Activity {
     public static final String TAG = "LoginActivity";
@@ -41,18 +42,28 @@ public class LoginActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_login);
-        LoginButton = (Button)findViewById(R.id.btn_log_in);
-        LoginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String query;
-                String id = ((EditText)findViewById(R.id.edit_id)).getText().toString();
-                String pw = ((EditText)findViewById(R.id.edit_pw)).getText().toString();
-                query = getString(R.string.query_login);
-                new LoginTask().execute(query,id,pw);
-            }
-        });
+        LoginSharedPreferences = getSharedPreferences("login", MODE_PRIVATE);
+        final String username = LoginSharedPreferences.getString("username", null);
+        final String password = LoginSharedPreferences.getString("password", null);
+        if (!"".equalsIgnoreCase(username) && username != null && password != null ) { // Auto login
+            String query;
+            query = getString(R.string.query_login);
+            new LoginTask().execute(query,username,password);
+        } else {
+            LoginButton = (Button)findViewById(R.id.btn_log_in);
+            LoginButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String query;
+                    String id = ((EditText)findViewById(R.id.edit_id)).getText().toString();
+                    String pw = ((EditText)findViewById(R.id.edit_pw)).getText().toString();
+                    query = getString(R.string.query_login);
+                    new LoginTask().execute(query,id,pw);
+                }
+            });
+        }
     }
 
     @Override
@@ -120,52 +131,28 @@ public class LoginActivity extends Activity {
             });
 
             try {
-                /*
                 ArrayList<BasicNameValuePair> nameValuePairs = new ArrayList<BasicNameValuePair>();
                 nameValuePairs.add(new BasicNameValuePair("username", urls[1]));
                 nameValuePairs.add(new BasicNameValuePair("password", urls[2]));
                 UrlEncodedFormEntity urlEncodedFormEntity = new UrlEncodedFormEntity(nameValuePairs, "UTF-8");
                 httpPost.setEntity(urlEncodedFormEntity);
-                */
-                JSONObject jsonObject = new JSONObject();
-                jsonObject.accumulate("username", urls[1]);
-                jsonObject.accumulate("password", urls[2]);
-                String json = jsonObject.toString();
-                StringEntity se = new StringEntity(json);
-                //httpPost.setEntity(se);
+                response = client.execute(httpPost);
 
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
-            } catch (JSONException e) {
+            } catch(ClientProtocolException e){
                 e.printStackTrace();
-            }
-
-            try {
-                response = client.execute(httpPost);
-            }
-            catch(ClientProtocolException e){
-                e.printStackTrace();
-            }
-            catch(IOException e) {
+            } catch(IOException e) {
                 e.printStackTrace();
                 alert.setMessage("[로그인 실패]네트워크 연결이 불안정 합니다");
                 LoginActivity.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        //alert.show();
+                        alert.show();
                     }
                 });
-
-                /**
-                 * FOR TEST
-                 */
-                Intent intent = new Intent(LoginActivity.this, com.example.junyeop_imaciislab.firsttechscm.MainActivity.class);
-                startActivity(intent);
-                overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out);
-                finish();
             }
 
-            //////
             try{
                 StatusLine statusLine = response.getStatusLine();
                 if(statusLine.getStatusCode() == HttpStatus.SC_OK){
