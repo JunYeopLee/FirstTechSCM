@@ -4,23 +4,18 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-
 import java.util.ArrayList;
-
-import com.example.junyeop_imaciislab.firsttechscm.R;
 import com.loopj.android.http.*;
-import com.loopj.android.http.Base64;
-
 import org.json.JSONObject;
-
 import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.client.CookieStore;
 import cz.msebera.android.httpclient.cookie.Cookie;
-import cz.msebera.android.httpclient.extras.*;
 
 
 /**
  * Created by LeeJunYeop on 2015-10-11.
+ *
+ * SAVE ITEM LIST FOR INPUT TAGID
  */
 public class itemDAOListWrapper {
     private static ArrayList<itemDAO> itemDAOArrayList;
@@ -28,12 +23,6 @@ public class itemDAOListWrapper {
     private String tagModifiedTime;
     private static Context context;
 
-    public itemDAOListWrapper(Context context) {
-        if(itemDAOArrayList==null) {
-            itemDAOArrayList = new ArrayList<>();
-        }
-        this.context = context;
-    }
     public itemDAOListWrapper(Context context,String tagID) {
         if(itemDAOArrayList==null) {
             itemDAOArrayList = new ArrayList<>();
@@ -41,6 +30,7 @@ public class itemDAOListWrapper {
         this.tagID = tagID;
         this.context = context;
     }
+
     public static ArrayList<itemDAO> getItemDAOArrayListFromServer(Context context) {
         // Get connection and set params
         AsyncHttpClient client = new AsyncHttpClient();

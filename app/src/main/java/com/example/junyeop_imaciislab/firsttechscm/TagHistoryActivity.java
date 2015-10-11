@@ -1,14 +1,9 @@
 package com.example.junyeop_imaciislab.firsttechscm;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.ListView;
 
-import com.example.junyeop_imaciislab.firsttechscm.R;
 import com.example.junyeop_imaciislab.firsttechscm.adapter.TagHistoryListViewAdapter;
-import com.example.junyeop_imaciislab.firsttechscm.adapter.TagTradeListViewAdapter;
-import com.example.junyeop_imaciislab.firsttechscm.util.itemDAO;
 import com.example.junyeop_imaciislab.firsttechscm.util.tagHistoryDAO;
 
 import java.util.ArrayList;

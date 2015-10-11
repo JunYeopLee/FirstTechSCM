@@ -7,12 +7,10 @@
     <string name="title_activity_nfctagging">NFCTaggingActivity</string>
     <string name="title_activity_splash">SplashActivity</string>
     <string name="title_activity_tag_read">태그 조회</string>
-    <string name="title_activity_tag_write">TagWriteActivity</string>
-    <string name="title_activity_tag_history">TagHistoryActivity</string>
-    <string name="title_activity_check_inventory">CheckInventoryActivity</string>
-    <string name="title_activity_nfctest">NFCtest</string>
-    <string name="title_activity_tag_viewer">TagViewer</string>
-    <string name="title_activity_ndef_message_parser">NdefMessageParser</string>
-    <string name="title_activity_item_history">ItemHistoryActivity</string>
+    <string name="title_activity_tag_write">태그 기록/재기록</string>
+    <string name="title_activity_tag_history">태그 이력</string>
+    <string name="title_activity_check_inventory">재고 조회</string>
+    <string name="title_activity_item_history">아이템 이력</string>
+    <string name="title_activity_inventory_detail">재고 상세정보</string>
 
 </resources>

@@ -16,8 +16,7 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+            android:label="@string/app_name" >
         </activity>
         <activity
             android:name=".LoginActivity"
@@ -58,11 +57,16 @@
         </activity>
         <activity
             android:name=".CheckInventoryActivity"
-            android:label="@string/title_activity_check_inventory" >
+            android:label="@string/title_activity_check_inventory"
+            android:windowSoftInputMode="adjustPan">
         </activity>
         <activity
             android:name=".ItemHistoryActivity"
             android:label="@string/title_activity_item_history" >
+        </activity>
+        <activity
+            android:name=".InventoryDetailActivity"
+            android:label="@string/title_activity_inventory_detail" >
         </activity>
     </application>
 

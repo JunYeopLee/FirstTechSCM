@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
 import android.widget.TextView;
-import com.example.junyeop_imaciislab.firsttechscm.adapter.TagTradeListViewAdapter;
+import com.example.junyeop_imaciislab.firsttechscm.adapter.ItemDAOListViewAdapter;
 import com.example.junyeop_imaciislab.firsttechscm.util.itemDAO;
 import com.example.junyeop_imaciislab.firsttechscm.util.itemDAOListWrapper;
 
@@ -35,8 +35,8 @@ public class TagReadActivity extends AppCompatActivity {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        TagTradeListViewAdapter tagTradeListViewAdapter = new TagTradeListViewAdapter(this,itemDAOArrayList);
-        itemListView.setAdapter(tagTradeListViewAdapter);
+        ItemDAOListViewAdapter itemDAOListViewAdapter = new ItemDAOListViewAdapter(this,itemDAOArrayList);
+        itemListView.setAdapter(itemDAOListViewAdapter);
     }
     private String getNFCtagID() {
         if(!getIntent().hasExtra("NFCtagID")) {

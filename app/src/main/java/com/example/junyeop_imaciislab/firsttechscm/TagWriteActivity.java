@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.junyeop_imaciislab.firsttechscm.adapter.TagTradeListViewAdapter;
+import com.example.junyeop_imaciislab.firsttechscm.adapter.ItemDAOListViewAdapter;
 import com.example.junyeop_imaciislab.firsttechscm.util.itemDAO;
 import com.example.junyeop_imaciislab.firsttechscm.util.itemDAOListWrapper;
 
@@ -30,6 +30,7 @@ public class TagWriteActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(TagWriteActivity.this, CheckInventoryActivity.class);
+                intent.putExtra("activityFrom","TagWriteActivity");
                 startActivity(intent);
             }
         });
@@ -43,8 +44,14 @@ public class TagWriteActivity extends AppCompatActivity {
         itemListView = (ListView)findViewById(R.id.listview_tagwrite);
         itemDAOListWrapper wrapper = new itemDAOListWrapper(this,NFCtagID);
         ArrayList<itemDAO> itemDAOArrayList = wrapper.getItemDAOArrayListFromServer(getApplicationContext());
-        TagTradeListViewAdapter tagTradeListViewAdapter = new TagTradeListViewAdapter(this,itemDAOArrayList);
-        itemListView.setAdapter(tagTradeListViewAdapter);
+        try {
+            if(itemDAOArrayList.isEmpty())  // wait for server
+                Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        ItemDAOListViewAdapter itemDAOListViewAdapter = new ItemDAOListViewAdapter(this,itemDAOArrayList);
+        itemListView.setAdapter(itemDAOListViewAdapter);
     }
 
     private String getNFCtagID() {
