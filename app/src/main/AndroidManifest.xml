@@ -46,7 +46,7 @@
         </activity>
         <activity
             android:name=".TagReadActivity"
-            android:label="@string/title_activity_tag_read" >
+            android:label="@string/title_activity_tag_read">
         </activity>
         <activity
             android:name=".TagWriteActivity"
