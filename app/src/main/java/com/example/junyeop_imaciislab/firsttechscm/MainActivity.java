@@ -177,7 +177,7 @@ public class MainActivity extends Activity {
                         });
                     }
                 } else{
-                    alert.setMessage("[로그인 실패]네트워크 연결이 불안정 합니다");
+                    alert.setMessage("[로그아웃 실패]네트워크 연결이 불안정 합니다");
                     MainActivity.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {

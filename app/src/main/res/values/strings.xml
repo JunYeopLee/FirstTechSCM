@@ -18,4 +18,5 @@
     <string name="server_url">http://166.104.142.190:50000/ftscm/</string>
     <string name="query_login">http://166.104.142.190:50000/ftscm/user/login</string>
     <string name="query_logout">http://166.104.142.190:50000/ftscm/user/logout</string>
+    <string name="title_activity_item_history">ItemHistoryActivity</string>
 </resources>
