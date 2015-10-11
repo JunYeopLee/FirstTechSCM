@@ -26,10 +26,15 @@ public class TagReadActivity extends AppCompatActivity {
         super.onResume();
         NFCtagTextView = (TextView)findViewById(R.id.txt_tagid);
         NFCtagTextView.setText(NFCtagID);
-
         itemListView = (ListView)findViewById(R.id.listview_tagread);
-        itemDAOListWrapper wrapper = new itemDAOListWrapper(NFCtagID);
-        ArrayList<itemDAO> itemDAOArrayList = wrapper.getItemDAOArrayList();
+        itemDAOListWrapper wrapper = new itemDAOListWrapper(this,NFCtagID);
+        ArrayList<itemDAO> itemDAOArrayList = wrapper.getItemDAOArrayListFromServer(getApplicationContext());
+        try {
+            if(itemDAOArrayList.isEmpty())  // wait for server
+                Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         TagTradeListViewAdapter tagTradeListViewAdapter = new TagTradeListViewAdapter(this,itemDAOArrayList);
         itemListView.setAdapter(tagTradeListViewAdapter);
     }

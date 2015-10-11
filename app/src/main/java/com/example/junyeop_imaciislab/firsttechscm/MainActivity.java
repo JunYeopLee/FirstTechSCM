@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.example.junyeop_imaciislab.firsttechscm.util.Constant;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 import org.apache.http.HttpResponse;
@@ -27,6 +28,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.HttpConnectionParams;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
@@ -108,7 +110,7 @@ public class MainActivity extends Activity {
      * For Login AsyncTask
      *
      * */
-    private class LogoutAsyncHttpResponseHandler extends AsyncHttpResponseHandler {
+    private class LogoutAsyncHttpResponseHandler extends JsonHttpResponseHandler {
         ProgressDialog dialog;
         @Override
         public void onStart() {
@@ -118,21 +120,36 @@ public class MainActivity extends Activity {
             dialog.show();
         }
         @Override
-        public void onSuccess(int statusCode, Header[] headers, byte[] response) {
-            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-            startActivity(intent);
-            overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out);
-            finish();
-            if(dialog != null && dialog.isShowing()){
-                dialog.dismiss();
+        public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+            try {
+                if(response.getBoolean("success")) {
+                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out);
+                    finish();
+                    if(dialog != null && dialog.isShowing()){
+                        dialog.dismiss();
+                    }
+                    LoginSharedPreferencesEditor = LoginSharedPreferences.edit();
+                    LoginSharedPreferencesEditor.remove("username");
+                    LoginSharedPreferencesEditor.remove("password");
+                    LoginSharedPreferencesEditor.apply();
+                } else {
+                    AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
+                    alert.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                    alert.setMessage("[로그아웃 실패]알 수 없는 에러").show();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-            LoginSharedPreferencesEditor = LoginSharedPreferences.edit();
-            LoginSharedPreferencesEditor.remove("username");
-            LoginSharedPreferencesEditor.remove("password");
-            LoginSharedPreferencesEditor.apply();
         }
         @Override
-        public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
+        public void onFailure(int statusCode, Header[] headers, Throwable throwable,JSONObject errorResponse) {
             if(dialog != null && dialog.isShowing()){
                 dialog.dismiss();
             }

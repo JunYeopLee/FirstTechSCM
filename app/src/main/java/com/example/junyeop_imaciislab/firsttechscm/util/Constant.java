@@ -8,7 +8,6 @@ public class Constant {
     private static final String queryTagsTrade = serverURL + "tags_trade";
     private static final String queryLogin = serverURL + "user/login";
     private static final String queryLogout = serverURL + "user/logout";
-
     public static String getServerURL() {
         return serverURL;
     }

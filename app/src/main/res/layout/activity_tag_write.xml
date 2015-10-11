@@ -76,6 +76,14 @@
             android:background="@android:color/holo_orange_dark"
             android:text="저장"/>
         <Button
+            android:id="@+id/btn_add_item"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_margin="8dp"
+            android:background="@android:color/holo_orange_dark"
+            android:text="상품 추가"/>
+        <Button
             android:id="@+id/btn_del_selected"
             android:layout_height="wrap_content"
             android:layout_width="0dp"
@@ -83,5 +91,6 @@
             android:layout_margin="8dp"
             android:background="@android:color/holo_orange_dark"
             android:text="선택항목 삭제"/>
+
     </LinearLayout>
 </LinearLayout>
