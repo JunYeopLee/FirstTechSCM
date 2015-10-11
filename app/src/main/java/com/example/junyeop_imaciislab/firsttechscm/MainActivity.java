@@ -15,6 +15,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.junyeop_imaciislab.firsttechscm.util.Constant;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.StatusLine;
@@ -27,6 +32,8 @@ import org.json.JSONTokener;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+
+import cz.msebera.android.httpclient.Header;
 
 public class MainActivity extends Activity {
     public static final String TAG = "MainActivity";
@@ -90,7 +97,8 @@ public class MainActivity extends Activity {
         LogOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new LogoutTask().execute(getString(R.string.query_logout));
+                AsyncHttpClient client = new AsyncHttpClient();
+                client.post(Constant.getQueryLogout(),new LogoutAsyncHttpResponseHandler());
             }
         });
     }
@@ -100,103 +108,42 @@ public class MainActivity extends Activity {
      * For Login AsyncTask
      *
      * */
-    private class LogoutTask extends AsyncTask<String, Void, HttpResponse> {
-        private Handler mHandler;
-        private ProgressDialog dialog;
+    private class LogoutAsyncHttpResponseHandler extends AsyncHttpResponseHandler {
+        ProgressDialog dialog;
         @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            mHandler = new Handler();
+        public void onStart() {
             dialog = new ProgressDialog(MainActivity.this);
             dialog.setMessage("잠시만 기다려 주세요.");
             dialog.setCancelable(false);
             dialog.show();
-            mHandler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    if(dialog != null && dialog.isShowing()){
-                        dialog.dismiss();
-                    }
-                }
-            },5000);
         }
-
         @Override
-        protected HttpResponse doInBackground(String... urls) {
-            HttpResponse response = null;
-            HttpClient client = new DefaultHttpClient();
-            HttpConnectionParams.setConnectionTimeout(client.getParams(), 5000);
-            HttpPost httpPost = new HttpPost(urls[0]);
-
-            final AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
+        public void onSuccess(int statusCode, Header[] headers, byte[] response) {
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(intent);
+            overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out);
+            finish();
+            if(dialog != null && dialog.isShowing()){
+                dialog.dismiss();
+            }
+            LoginSharedPreferencesEditor = LoginSharedPreferences.edit();
+            LoginSharedPreferencesEditor.remove("username");
+            LoginSharedPreferencesEditor.remove("password");
+            LoginSharedPreferencesEditor.apply();
+        }
+        @Override
+        public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
+            if(dialog != null && dialog.isShowing()){
+                dialog.dismiss();
+            }
+            AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
             alert.setPositiveButton("확인", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
                 }
             });
-
-            try {
-                response = client.execute(httpPost);
-            } catch(IOException e) {
-                e.printStackTrace();
-                alert.setMessage("[로그아웃 실패]네트워크 연결이 불안정 합니다");
-                MainActivity.this.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        alert.show();
-                    }
-                });
-            }
-
-            try{
-                StatusLine statusLine = response.getStatusLine();
-                if(statusLine.getStatusCode() == HttpStatus.SC_OK){
-                    ByteArrayOutputStream out = new ByteArrayOutputStream();
-                    response.getEntity().writeTo(out);
-                    String responseString = out.toString();
-                    out.close();
-                    JSONTokener tokener = new JSONTokener(responseString);
-                    JSONObject finalResult = (JSONObject)tokener.nextValue();
-                    if(finalResult.getBoolean("success")==true) {
-                        LoginSharedPreferencesEditor = LoginSharedPreferences.edit();
-                        LoginSharedPreferencesEditor.remove("username");
-                        LoginSharedPreferencesEditor.remove("password");
-                        LoginSharedPreferencesEditor.commit();
-                        Intent intent = new Intent(MainActivity.this, com.example.junyeop_imaciislab.firsttechscm.LoginActivity.class);
-                        startActivity(intent);
-                        overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out);
-                        finish();
-                    } else {
-                        alert.setMessage("[로그아웃 실패]네트워크 연결이 불안정 합니다");
-                        MainActivity.this.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                alert.show();
-                            }
-                        });
-                    }
-                } else{
-                    alert.setMessage("[로그아웃 실패]네트워크 연결이 불안정 합니다");
-                    MainActivity.this.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            alert.show();
-                        }
-                    });
-                    response.getEntity().getContent().close();
-                    throw new IOException(statusLine.getReasonPhrase());
-                }
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-            }
-            return response;
-        }
-        @Override
-        protected void onPostExecute(HttpResponse response) {
-            if(dialog != null && dialog.isShowing()){
-                dialog.dismiss();
-            }
+            alert.setMessage("[로그아웃 실패]네트워크 연결이 불안정 합니다").show();
         }
     }
 }

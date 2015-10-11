@@ -7,26 +7,29 @@ import android.widget.ListView;
 import android.widget.TextView;
 import com.example.junyeop_imaciislab.firsttechscm.adapter.TagTradeListViewAdapter;
 import com.example.junyeop_imaciislab.firsttechscm.util.itemDAO;
+import com.example.junyeop_imaciislab.firsttechscm.util.itemDAOListWrapper;
 
 import java.util.ArrayList;
 
 public class TagReadActivity extends AppCompatActivity {
     private String NFCtagID;
-    private TextView NFCtagTest;
+    private TextView NFCtagTextView;
     private ListView itemListView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tag_read);
         NFCtagID = getNFCtagID();
-        itemListView = (ListView)findViewById(R.id.listview_tagread);
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        NFCtagTextView = (TextView)findViewById(R.id.txt_tagid);
+        NFCtagTextView.setText(NFCtagID);
 
-        ArrayList<itemDAO> itemDAOArrayList = new ArrayList<>();
-        itemDAO itemDAOObject = new itemDAO();
-        itemDAOArrayList.add(itemDAOObject);
-        itemDAOArrayList.add(itemDAOObject);
-        itemDAOArrayList.add(itemDAOObject);
-        itemDAOArrayList.add(itemDAOObject);
+        itemListView = (ListView)findViewById(R.id.listview_tagread);
+        itemDAOListWrapper wrapper = new itemDAOListWrapper(NFCtagID);
+        ArrayList<itemDAO> itemDAOArrayList = wrapper.getItemDAOArrayList();
         TagTradeListViewAdapter tagTradeListViewAdapter = new TagTradeListViewAdapter(this,itemDAOArrayList);
         itemListView.setAdapter(tagTradeListViewAdapter);
     }

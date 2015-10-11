@@ -19,7 +19,11 @@ public class TagHistoryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tag_history);
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
         tagHistoryListView = (ListView)findViewById(R.id.listview_taghistory);
         ArrayList<tagHistoryDAO> tagHistoryDAOArrayList = new ArrayList<>();
         tagHistoryDAO tagHistoryDAOObject = new tagHistoryDAO();
