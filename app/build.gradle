@@ -26,4 +26,5 @@ dependencies {
     compile 'org.apache.httpcomponents:httpclient:4.5'
     compile 'com.google.guava:guava:13.0.1'
     compile 'com.loopj.android:android-async-http:1.4.9'
+    compile 'com.jakewharton:butterknife:6.1.0'
 }

@@ -4,9 +4,19 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import java.util.ArrayList;
-import com.loopj.android.http.*;
+
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.PersistentCookieStore;
+import com.loopj.android.http.RequestHandle;
+import com.loopj.android.http.RequestParams;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+
 import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.client.CookieStore;
 import cz.msebera.android.httpclient.cookie.Cookie;
@@ -19,8 +29,8 @@ import cz.msebera.android.httpclient.cookie.Cookie;
  */
 public class itemDAOListWrapper {
     private static ArrayList<itemDAO> itemDAOArrayList;
-    private String tagID;
-    private String tagModifiedTime;
+    private static String tagID;
+    private static String tagModifiedTime;
     private static Context context;
 
     public itemDAOListWrapper(Context context,String tagID) {
@@ -31,11 +41,15 @@ public class itemDAOListWrapper {
         this.context = context;
     }
 
-    public static ArrayList<itemDAO> getItemDAOArrayListFromServer(Context context) {
+    public static ArrayList<itemDAO> getItemDAOArrayList() {
+        return itemDAOArrayList;
+    }
+
+    public ArrayList<itemDAO> getItemDAOArrayListFromServer(Context context) {
         // Get connection and set params
         AsyncHttpClient client = new AsyncHttpClient();
         RequestParams requestParams = new RequestParams();
-        requestParams.add("tags_code", "T1510111");
+        requestParams.add("tags_code", tagID);
 
         // Set Cookie from store(JSESSIONID)
         CookieStore cookieStore = new PersistentCookieStore(context);
@@ -49,7 +63,7 @@ public class itemDAOListWrapper {
             }
         }
         // Execute query for tag information and getItemDAOArrayList from server
-        client.get(Constant.getQueryTagsTrade(),requestParams,new receiveTagInformaitnoHandler());
+        RequestHandle requestHandle = client.get(Constant.getQueryTagsTrade(), requestParams, new receiveTagInformaitnoHandler());
         return itemDAOArrayList;
     }
 
@@ -58,7 +72,7 @@ public class itemDAOListWrapper {
      * For receive tag information from Server
      *
      */
-    private static class receiveTagInformaitnoHandler extends JsonHttpResponseHandler {
+    private class receiveTagInformaitnoHandler extends JsonHttpResponseHandler {
         ProgressDialog dialog;
         @Override
         public void onStart() {
@@ -70,14 +84,25 @@ public class itemDAOListWrapper {
         @Override
         public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
             // called when response HTTP status is "200 OK"
-            itemDAO itemDAOObject = new itemDAO();
-            itemDAOArrayList.clear();
-            itemDAOArrayList.add(itemDAOObject);
-            itemDAOArrayList.add(itemDAOObject);
-            itemDAOArrayList.add(itemDAOObject);
-            itemDAOArrayList.add(itemDAOObject);
-            if(dialog != null && dialog.isShowing()){
-                dialog.dismiss();
+            try {
+                if(response.getBoolean("success")) {
+                    itemDAOArrayList.clear();
+                    JSONArray jsonArray = response.getJSONArray("result");
+                    for( int i  = 0 ; i < jsonArray.length() ; i++ ) {
+                        itemDAO itemDAOObject = new itemDAO();
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        itemDAOObject.setItemName(jsonObject.getString(Constant.getServerItemName()));
+                        itemDAOObject.setItemStatus(jsonObject.getString(Constant.getServerItemStatus()));
+                        itemDAOObject.setPrice(jsonObject.getString(Constant.getServerPrice()));
+                        itemDAOObject.setAmount(jsonObject.getString(Constant.getServerAmount()));
+                        itemDAOArrayList.add(itemDAOObject);
+                    }
+                    if(dialog != null && dialog.isShowing()){
+                        dialog.dismiss();
+                    }
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
         }
 

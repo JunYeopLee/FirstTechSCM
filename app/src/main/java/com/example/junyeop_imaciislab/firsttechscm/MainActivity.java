@@ -47,7 +47,8 @@ public class MainActivity extends AppCompatActivity {
         TagReadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, com.example.junyeop_imaciislab.firsttechscm.NFCTaggingActivity.class);
+                //Intent intent = new Intent(MainActivity.this, com.example.junyeop_imaciislab.firsttechscm.NFCTaggingActivity.class);
+                Intent intent = new Intent(MainActivity.this, TagReadActivity.class); // For Test
                 intent.putExtra("activityToGo","read");
                 startActivity(intent);
             }
@@ -56,7 +57,8 @@ public class MainActivity extends AppCompatActivity {
         TagWriteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, com.example.junyeop_imaciislab.firsttechscm.NFCTaggingActivity.class);
+                //Intent intent = new Intent(MainActivity.this, com.example.junyeop_imaciislab.firsttechscm.NFCTaggingActivity.class);
+                Intent intent = new Intent(MainActivity.this, TagWriteActivity.class); // For Test
                 intent.putExtra("activityToGo","write");
                 startActivity(intent);
             }
@@ -65,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         TagHistoryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, com.example.junyeop_imaciislab.firsttechscm.TagHistoryActivity.class);
+                Intent intent = new Intent(MainActivity.this, TagHistoryActivity.class);
                 startActivity(intent);
             }
         });

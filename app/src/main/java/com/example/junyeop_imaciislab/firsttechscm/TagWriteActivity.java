@@ -24,7 +24,9 @@ public class TagWriteActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tag_write);
-        NFCtagID = getNFCtagID();
+        //NFCtagID = getNFCtagID();
+        NFCtagID = "T1510111"; // For Test
+
         addItemButton = (Button)findViewById(R.id.btn_add_item);
         addItemButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -34,24 +36,26 @@ public class TagWriteActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        findViewById(R.id.btn_del_selected).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                itemListView.invalidate();
+            }
+        });
     }
     @Override
     protected void onResume() {
         super.onResume();
         NFCtagTextView = (TextView)findViewById(R.id.txt_tagid);
         NFCtagTextView.setText(NFCtagID);
-
         itemListView = (ListView)findViewById(R.id.listview_tagwrite);
         itemDAOListWrapper wrapper = new itemDAOListWrapper(this,NFCtagID);
         ArrayList<itemDAO> itemDAOArrayList = wrapper.getItemDAOArrayListFromServer(getApplicationContext());
-        try {
-            if(itemDAOArrayList.isEmpty())  // wait for server
-                Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        waitForServer();
         ItemDAOListViewAdapter itemDAOListViewAdapter = new ItemDAOListViewAdapter(this,itemDAOArrayList);
         itemListView.setAdapter(itemDAOListViewAdapter);
+        itemDAOListViewAdapter.notifyDataSetChanged();
+        itemListView.invalidateViews();
     }
 
     private String getNFCtagID() {
@@ -62,5 +66,13 @@ public class TagWriteActivity extends AppCompatActivity {
             return null;
         }
         return getIntent().getExtras().getString("NFCtagID");
+    }
+
+    private void waitForServer() {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

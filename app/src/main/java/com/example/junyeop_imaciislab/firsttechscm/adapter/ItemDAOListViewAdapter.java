@@ -1,4 +1,5 @@
 package com.example.junyeop_imaciislab.firsttechscm.adapter;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -6,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.junyeop_imaciislab.firsttechscm.ItemHistoryActivity;
 import com.example.junyeop_imaciislab.firsttechscm.R;
@@ -17,21 +19,23 @@ import java.util.ArrayList;
  * Created by LeeJunYeop on 2015-10-11.
  */
 public class ItemDAOListViewAdapter extends ArrayAdapter<itemDAO> {
-    private final Activity context;
+    private Activity context;
     private ArrayList<itemDAO> itemDAOArrayList;
     private String activityFrom ="";
+
+
     public ArrayList<itemDAO> getItemDAOArrayList() {
         return itemDAOArrayList;
     }
 
     public ItemDAOListViewAdapter(Activity context, ArrayList<itemDAO> itemDAOArrayList) {
-        super(context, R.layout.item_tag_trade_list, itemDAOArrayList);
+        super(context, R.layout.item_itemdao_list, itemDAOArrayList);
         this.context = context;
         this.itemDAOArrayList = itemDAOArrayList;
     }
 
     public ItemDAOListViewAdapter(Activity context, ArrayList<itemDAO> itemDAOArrayList,String activityFrom) {
-        super(context, R.layout.item_tag_trade_list, itemDAOArrayList);
+        super(context, R.layout.item_itemdao_list, itemDAOArrayList);
         this.context = context;
         this.itemDAOArrayList = itemDAOArrayList;
         this.activityFrom = activityFrom;
@@ -40,8 +44,20 @@ public class ItemDAOListViewAdapter extends ArrayAdapter<itemDAO> {
     @Override
     public View getView(final int position, View view, final ViewGroup parent) {
         LayoutInflater inflater = context.getLayoutInflater();
-        View rowView = inflater.inflate(R.layout.item_tag_trade_list, null, true);
+        final View rowView = inflater.inflate(R.layout.item_itemdao_list, null, true);
+
         setInvisibleSomeComponent(rowView);
+
+        TextView itemNameTextView = (TextView)rowView.findViewById(R.id.txt_itemname);
+        Button itemStatusButton = (Button)rowView.findViewById(R.id.btn_item_status);
+        TextView priceTextView = (TextView)rowView.findViewById(R.id.txt_price);
+        TextView amountTextView = (TextView)rowView.findViewById(R.id.txt_amount);
+
+        itemDAO itemDAOObject = itemDAOArrayList.get(position);
+        itemNameTextView.setText(itemDAOObject.getItemName());
+        //itemStatusButton.setText(itemDAOObject.getItemStatus());
+        priceTextView.setText(itemDAOObject.getPrice());
+        amountTextView.setText(itemDAOObject.getAmount());
 
         Button itemHistoryButton = (Button)rowView.findViewById(R.id.btn_item_history);
         itemHistoryButton.setOnClickListener(new View.OnClickListener() {
@@ -51,6 +67,7 @@ public class ItemDAOListViewAdapter extends ArrayAdapter<itemDAO> {
                 context.startActivity(intent);
             }
         });
+
         return rowView;
     }
 
@@ -62,3 +79,4 @@ public class ItemDAOListViewAdapter extends ArrayAdapter<itemDAO> {
         }
     }
 }
+
