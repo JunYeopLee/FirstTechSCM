@@ -6,18 +6,17 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.example.junyeop_imaciislab.firsttechscm.activity.LoginActivity"
     android:orientation="vertical"
-    android:background="@android:color/white">
+    android:background="#EEEEEE">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="2"
-        android:gravity="center">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="First SCM 식자재 물류관리 시스템"
-            android:textSize="20dp"
+        android:gravity="center_horizontal|bottom">
+        <ImageView
+            android:layout_width="234dp"
+            android:layout_height="215dp"
+            android:background="@drawable/img_login_box"
             android:gravity="center"/>
     </LinearLayout>
 
@@ -31,19 +30,18 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
             android:orientation="horizontal">
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="ID"
-                android:textSize="20dp"
-                android:gravity="center"/>
             <EditText
                 android:id="@+id/edit_id"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="4"
+                android:background="@drawable/img_login_id"
+                android:paddingLeft="50dp"
+                android:hint="아이디 입력"
+                android:textColorHint="#CCCCCC"
                 android:singleLine="true"/>
         </LinearLayout>
 
@@ -51,20 +49,19 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
             android:orientation="horizontal">
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="PW"
-                android:textSize="20dp"
-                android:gravity="center"/>
             <EditText
                 android:id="@+id/edit_pw"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="4"
                 android:inputType="textPassword"
+                android:background="@drawable/img_login_pw"
+                android:paddingLeft="50dp"
+                android:hint="비밀번호 입력"
+                android:textColorHint="#CCCCCC"
                 android:singleLine="true"/>
         </LinearLayout>
     </LinearLayout>
@@ -73,12 +70,13 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:padding="30dp">
+        android:paddingTop="15dp"
+        android:gravity="center_horizontal">
         <Button
             android:id="@+id/btn_log_in"
-            android:text="LOG IN"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="156dp"
+            android:layout_height="53dp"
+            android:background="@drawable/btn_login"
             />
     </LinearLayout>
 </LinearLayout>

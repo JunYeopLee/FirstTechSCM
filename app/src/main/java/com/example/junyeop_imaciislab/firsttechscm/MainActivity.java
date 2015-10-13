@@ -8,12 +8,13 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.junyeop_imaciislab.firsttechscm.util.Constant;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -25,24 +26,24 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences.Editor LoginSharedPreferencesEditor;
 
     private TextView UserIdtxt;
-    private Button TagReadButton;
-    private Button TagWriteButton;
-    private Button TagHistoryButton;
-    private Button CheckInventoryButton;
-    private Button LogOutButton;
+    private ImageButton TagReadButton;
+    private ImageButton TagWriteButton;
+    private ImageButton TagHistoryButton;
+    private ImageButton CheckInventoryButton;
+    private ImageButton LogOutButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         LoginSharedPreferences = getSharedPreferences("login",MODE_PRIVATE);
-        UserIdtxt = (TextView)findViewById(R.id.txt_userid);
-        UserIdtxt.setText("USER ID : " + LoginSharedPreferences.getString("username",""));
+        //UserIdtxt = (TextView)findViewById(R.id.txt_userid);
+        //UserIdtxt.setText("USER ID : " + LoginSharedPreferences.getString("username",""));
 
-        TagReadButton = (Button)findViewById(R.id.btn_tag_read);
-        TagWriteButton = (Button)findViewById(R.id.btn_tag_write);
-        TagHistoryButton = (Button)findViewById(R.id.btn_tag_history);
-        CheckInventoryButton = (Button)findViewById(R.id.btn_check_inventory);
-        LogOutButton = (Button)findViewById(R.id.btn_log_out);
+        TagReadButton = (ImageButton)findViewById(R.id.btn_tag_read);
+        TagWriteButton = (ImageButton)findViewById(R.id.btn_tag_write);
+        TagHistoryButton = (ImageButton)findViewById(R.id.btn_tag_history);
+        CheckInventoryButton = (ImageButton)findViewById(R.id.btn_check_inventory);
+        LogOutButton = (ImageButton)findViewById(R.id.btn_log_out);
 
         TagReadButton.setOnClickListener(new View.OnClickListener() {
             @Override
