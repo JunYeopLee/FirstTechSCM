@@ -49,13 +49,22 @@ public class ItemDAOListViewAdapter extends ArrayAdapter<itemDAO> {
         setInvisibleSomeComponent(rowView);
 
         TextView itemNameTextView = (TextView)rowView.findViewById(R.id.txt_itemname);
+        TextView categoryTextView = (TextView)rowView.findViewById(R.id.txt_category);
         Button itemStatusButton = (Button)rowView.findViewById(R.id.btn_item_status);
+        TextView standardTextView = (TextView)rowView.findViewById(R.id.txt_standard);
+        TextView unitTextView = (TextView)rowView.findViewById(R.id.txt_unit);
         TextView priceTextView = (TextView)rowView.findViewById(R.id.txt_price);
         TextView amountTextView = (TextView)rowView.findViewById(R.id.txt_amount);
+        TextView locationTextView = (TextView)rowView.findViewById(R.id.txt_location);
+        TextView customerTextView = (TextView)rowView.findViewById(R.id.txt_customer);
 
         itemDAO itemDAOObject = itemDAOArrayList.get(position);
+
         itemNameTextView.setText(itemDAOObject.getItemName());
         //itemStatusButton.setText(itemDAOObject.getItemStatus());
+        categoryTextView.setText(itemDAOObject.getCategory());
+        standardTextView.setText(itemDAOObject.getStandard());
+        unitTextView.setText(itemDAOObject.getUnit());
         priceTextView.setText(itemDAOObject.getPrice());
         amountTextView.setText(itemDAOObject.getAmount());
 
@@ -64,6 +73,7 @@ public class ItemDAOListViewAdapter extends ArrayAdapter<itemDAO> {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, ItemHistoryActivity.class);
+                context.overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out);
                 context.startActivity(intent);
             }
         });

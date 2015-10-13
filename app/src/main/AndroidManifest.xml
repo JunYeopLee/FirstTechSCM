@@ -62,7 +62,8 @@
         </activity>
         <activity
             android:name=".ItemHistoryActivity"
-            android:label="@string/title_activity_item_history" >
+            android:label="@string/title_activity_item_history"
+            android:theme="@android:style/Theme.Translucent">
         </activity>
         <activity
             android:name=".InventoryDetailActivity"

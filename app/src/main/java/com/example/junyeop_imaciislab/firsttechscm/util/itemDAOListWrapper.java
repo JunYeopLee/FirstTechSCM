@@ -45,6 +45,10 @@ public class itemDAOListWrapper {
         return itemDAOArrayList;
     }
 
+    public static String getTagModifiedTime() {
+        return tagModifiedTime;
+    }
+
     public ArrayList<itemDAO> getItemDAOArrayListFromServer(Context context) {
         // Get connection and set params
         AsyncHttpClient client = new AsyncHttpClient();
@@ -87,22 +91,32 @@ public class itemDAOListWrapper {
             try {
                 if(response.getBoolean("success")) {
                     itemDAOArrayList.clear();
-                    JSONArray jsonArray = response.getJSONArray("result");
-                    for( int i  = 0 ; i < jsonArray.length() ; i++ ) {
+                    JSONArray jsonArray = response.getJSONObject("result").getJSONArray("data");
+                    for( int i  = 0 ; i < jsonArray.length() ; i++ ) { // get trade information
                         itemDAO itemDAOObject = new itemDAO();
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
                         itemDAOObject.setItemName(jsonObject.getString(Constant.getServerItemName()));
                         itemDAOObject.setItemStatus(jsonObject.getString(Constant.getServerItemStatus()));
-                        itemDAOObject.setPrice(jsonObject.getString(Constant.getServerPrice()));
+                        itemDAOObject.setCategory(jsonObject.getString(Constant.getServerCategory()));
+
+                        itemDAOObject.setStandard(jsonObject.getString(Constant.getServerStandard()));
+                        itemDAOObject.setUnit(jsonObject.getString(Constant.getServerUnit()));
                         itemDAOObject.setAmount(jsonObject.getString(Constant.getServerAmount()));
+                        itemDAOObject.setPrice(jsonObject.getString(Constant.getServerPrice()));
+
                         itemDAOArrayList.add(itemDAOObject);
                     }
+
+                    tagModifiedTime = response.getJSONObject("result").getString(Constant.getServerTagModifiedTime()); // get tag modified time
                     if(dialog != null && dialog.isShowing()){
                         dialog.dismiss();
                     }
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
+                if(dialog != null && dialog.isShowing()){
+                    dialog.dismiss();
+                }
             }
         }
 

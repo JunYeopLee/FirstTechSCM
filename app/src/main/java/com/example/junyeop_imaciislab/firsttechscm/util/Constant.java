@@ -11,8 +11,15 @@ public class Constant {
 
     private static final String serverItemName = "ITEM_NAME";
     private static final String serverItemStatus = "TYPE";
+    private static final String serverCategory = "NAME";
+    private static final String serverExpiryDate = "";
+    private static final String serverStandard = "ITEM_COUNT";
+    private static final String serverUnit = "UNIT";
+    private static final String serverAmount = "AMOUNT";
     private static final String serverPrice = "COST";
-    private static final String serverAmount = "ITEM_COUNT";
+    private static final String serverLocation = "";
+    private static final String serverCustomer = "";
+    private static final String serverTagModifiedTime =  "tag_modified_time";
 
     public static String getServerURL() {
         return serverURL;
@@ -30,20 +37,47 @@ public class Constant {
         return queryLogout;
     }
 
-
     public static String getServerItemName() {
         return serverItemName;
-    }
-
-    public static String getServerPrice() {
-        return serverPrice;
     }
 
     public static String getServerItemStatus() {
         return serverItemStatus;
     }
 
+    public static String getServerCategory() {
+        return serverCategory;
+    }
+
+    public static String getServerExpiryDate() {
+        return serverExpiryDate;
+    }
+
+    public static String getServerStandard() {
+        return serverStandard;
+    }
+
+    public static String getServerUnit() {
+        return serverUnit;
+    }
+
     public static String getServerAmount() {
         return serverAmount;
+    }
+
+    public static String getServerPrice() {
+        return serverPrice;
+    }
+
+    public static String getServerLocation() {
+        return serverLocation;
+    }
+
+    public static String getServerCustomer() {
+        return serverCustomer;
+    }
+
+    public static String getServerTagModifiedTime() {
+        return serverTagModifiedTime;
     }
 }
