@@ -1,6 +1,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:id="@+id/buying_background"
+    android:id="@+id/layout_itemhistory_bg"
     android:layout_height="match_parent" android:paddingLeft="30dp"
     android:paddingRight="30dp"
     android:paddingTop="80dp"
@@ -20,7 +20,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@android:color/background_dark"
+            android:background="@color/blackbar_color"
             android:gravity="center"
             android:text="일시"
             android:textColor="@android:color/white"/>
@@ -29,7 +29,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@android:color/background_dark"
+            android:background="@color/blackbar_color"
             android:gravity="center"
             android:text="상태"
             android:textColor="@android:color/white"/>
@@ -38,7 +38,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@android:color/background_dark"
+            android:background="@color/blackbar_color"
             android:gravity="center"
             android:text="현재위치"
             android:textColor="@android:color/white"/>

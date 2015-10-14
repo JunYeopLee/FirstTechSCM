@@ -36,6 +36,7 @@ public class itemDAOListWrapper {
     public itemDAOListWrapper(Context context,String tagID) {
         if(itemDAOArrayList==null) {
             itemDAOArrayList = new ArrayList<>();
+            tagModifiedTime = "새로고침 해주세요";
         }
         this.tagID = tagID;
         this.context = context;

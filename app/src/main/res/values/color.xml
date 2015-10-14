@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="titlebar_color">#EF6043</color>
+    <color name="backgroud_color">#F7F7F7</color>
+    <color name="blackbar_color">#3C3E44</color>
+    <color name="value_color">#AAAAAA</color>
+    <color name="border_color">#EEEEEE</color>
+</resources>

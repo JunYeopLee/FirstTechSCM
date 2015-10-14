@@ -1,46 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:background="@android:color/white"
-    android:orientation="vertical"
-    android:padding="10dp">
+<RelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="horizontal">
-        <CheckBox
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:text="TAG323"
-            android:textColor="@android:color/background_dark"
-            android:textStyle="bold"
-            android:textSize="20dp"/>
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="6"
-            android:text="15-07-08 12:00:45"
-            android:textSize="20dp"/>
+        android:id="@+id/layout_history_information"
+        android:layout_width="280dp" android:layout_height="81dp"
+        android:background="@drawable/border_itemdao"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:paddingLeft="10dp"
+            android:orientation="horizontal">
+            <CheckBox
+                android:id="@+id/ckbox_taghistory"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="7dp"
+                android:button="@null"
+                android:background="@android:color/transparent"
+                android:drawableLeft="@drawable/btn_ckbox_select_item"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:text="TAG323"
+                android:textColor="@color/titlebar_color"
+                android:textStyle="bold"
+                android:textSize="20dp"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="6"
+                android:text="15-07-08 12:00:45"
+                android:textColor="@color/value_color"
+                android:textSize="15dp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginTop="-1dp"
+            android:gravity="center"
+            android:background="@drawable/border_itemdao"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:text="고등어(소금안친거)외 4종"
+                android:textColor="@color/value_color"
+                android:textStyle="bold"
+                android:textSize="15dp"
+                android:gravity="center"/>
+        </LinearLayout>
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:text="고등어(소금안친거)외 4종"
-            android:textColor="@android:color/background_dark"
-            android:textStyle="bold"
-            android:textSize="20dp"
-            android:gravity="center"/>
-    </LinearLayout>
-</LinearLayout>
+    <ImageButton
+        android:layout_width="45dp"
+        android:layout_height="81dp"
+        android:background="@android:color/transparent"
+        android:scaleType="fitCenter"
+        android:layout_toRightOf="@+id/layout_history_information"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/btn_history_detail"
+        />
+</RelativeLayout>
+
+

@@ -6,13 +6,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.example.junyeop_imaciislab.firsttechscm.InventoryDetailActivity;
-import com.example.junyeop_imaciislab.firsttechscm.ItemHistoryActivity;
 import com.example.junyeop_imaciislab.firsttechscm.R;
 import com.example.junyeop_imaciislab.firsttechscm.util.checkInventoryDAO;
-import com.example.junyeop_imaciislab.firsttechscm.util.tagHistoryDAO;
 
 import java.util.ArrayList;
 
@@ -35,7 +33,7 @@ public class CheckInventoryListViewAdapter   extends ArrayAdapter<checkInventory
         LayoutInflater inflater = context.getLayoutInflater();
         View rowView = inflater.inflate(R.layout.item_check_inventory_list, null, true);
 
-        Button checkDetailButton = (Button)rowView.findViewById(R.id.btn_check_detail);
+        ImageButton checkDetailButton = (ImageButton)rowView.findViewById(R.id.btn_check_detail);
         checkDetailButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

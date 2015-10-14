@@ -21,7 +21,6 @@ public class TagReadActivity extends AppCompatActivity {
     private ListView itemListView;
     private TextView modifiedTimeTextView;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

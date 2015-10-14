@@ -10,9 +10,9 @@
     <style name="CustomActionBar"
         parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
         <item name="android:titleTextStyle">@style/TitleTextStyle</item>
-        <item name="android:background">#F44336</item>
+        <item name="android:background">#EF6043</item>
         <!-- Support library compatibility -->
-        <item name="background">@android:color/holo_red_light</item>
+        <item name="background">@color/titlebar_color</item>
         <item name="titleTextStyle">@style/TitleTextStyle</item>
     </style>
     <style name="TitleTextStyle" parent="android:style/TextAppearance.Holo.Widget.ActionBar.Title">

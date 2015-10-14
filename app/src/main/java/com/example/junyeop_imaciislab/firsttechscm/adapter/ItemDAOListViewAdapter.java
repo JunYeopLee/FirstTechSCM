@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.junyeop_imaciislab.firsttechscm.ItemHistoryActivity;
@@ -50,7 +50,7 @@ public class ItemDAOListViewAdapter extends ArrayAdapter<itemDAO> {
 
         TextView itemNameTextView = (TextView)rowView.findViewById(R.id.txt_itemname);
         TextView categoryTextView = (TextView)rowView.findViewById(R.id.txt_category);
-        Button itemStatusButton = (Button)rowView.findViewById(R.id.btn_item_status);
+        ImageButton itemStatusButton = (ImageButton)rowView.findViewById(R.id.btn_item_status);
         TextView standardTextView = (TextView)rowView.findViewById(R.id.txt_standard);
         TextView unitTextView = (TextView)rowView.findViewById(R.id.txt_unit);
         TextView priceTextView = (TextView)rowView.findViewById(R.id.txt_price);
@@ -68,7 +68,7 @@ public class ItemDAOListViewAdapter extends ArrayAdapter<itemDAO> {
         priceTextView.setText(itemDAOObject.getPrice());
         amountTextView.setText(itemDAOObject.getAmount());
 
-        Button itemHistoryButton = (Button)rowView.findViewById(R.id.btn_item_history);
+        ImageButton itemHistoryButton = (ImageButton)rowView.findViewById(R.id.btn_item_history);
         itemHistoryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
