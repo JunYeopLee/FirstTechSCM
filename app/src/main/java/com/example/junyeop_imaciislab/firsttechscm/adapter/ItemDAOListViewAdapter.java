@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -66,7 +67,7 @@ public class ItemDAOListViewAdapter extends ArrayAdapter<itemDAO> {
         TextView amountTextView = (TextView)rowView.findViewById(R.id.txt_amount);
         TextView locationTextView = (TextView)rowView.findViewById(R.id.txt_location);
         TextView customerTextView = (TextView)rowView.findViewById(R.id.txt_customer);
-        final CheckBox itemCheckBox = (CheckBox)rowView.findViewById(R.id.ckbox_select_item);
+        CheckBox itemCheckBox = (CheckBox)rowView.findViewById(R.id.ckbox_select_item);
 
         final itemDAO itemDAOObject = itemDAOArrayList.get(position);
 
@@ -85,9 +86,11 @@ public class ItemDAOListViewAdapter extends ArrayAdapter<itemDAO> {
         int dp5 = (int) (5 * scale + 0.5f);
         int dp15 = (int) (15 * scale + 0.5f);
         if(isSelected) {
+            itemCheckBox.setChecked(true);
             rowView.findViewById(R.id.layout_itemdao_information).setBackground(context.getResources().getDrawable(R.drawable.border_itemdao_tab));
             rowView.findViewById(R.id.layout_itemdao_information).setPadding(dp15, dp5, dp15, dp5);
         } else {
+            itemCheckBox.setChecked(false);
             rowView.findViewById(R.id.layout_itemdao_information).setBackground(context.getResources().getDrawable(R.drawable.border_itemdao));
             rowView.findViewById(R.id.layout_itemdao_information).setPadding(dp15, dp5, dp15, dp5);
         }
@@ -108,6 +111,22 @@ public class ItemDAOListViewAdapter extends ArrayAdapter<itemDAO> {
                 Intent intent = new Intent(context, ItemHistoryActivity.class);
                 context.overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out);
                 context.startActivity(intent);
+            }
+        });
+
+        itemCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                int dp5 = (int) (5 * scale + 0.5f);
+                int dp15 = (int) (15 * scale + 0.5f);
+                itemDAOObject.setIsSelected(isChecked);
+                if(isChecked) {
+                    rowView.findViewById(R.id.layout_itemdao_information).setBackground(context.getResources().getDrawable(R.drawable.border_itemdao_tab));
+                    rowView.findViewById(R.id.layout_itemdao_information).setPadding(dp15, dp5, dp15, dp5);
+                } else {
+                    rowView.findViewById(R.id.layout_itemdao_information).setBackground(context.getResources().getDrawable(R.drawable.border_itemdao));
+                    rowView.findViewById(R.id.layout_itemdao_information).setPadding(dp15, dp5, dp15, dp5);
+                }
             }
         });
 

@@ -42,6 +42,13 @@ public class itemDAOListWrapper {
         this.context = context;
     }
 
+    public void clearAllStaticVariable() {
+        if(itemDAOArrayList!=null) itemDAOArrayList.clear();
+        tagID = "";
+        tagModifiedTime = "새로고침 해주세요";
+        context = null;
+    }
+
     public static ArrayList<itemDAO> getItemDAOArrayList() {
         return itemDAOArrayList;
     }
