@@ -1,10 +1,12 @@
 package com.example.junyeop_imaciislab.firsttechscm;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.os.Handler;
 
 import com.example.junyeop_imaciislab.firsttechscm.adapter.ItemDAOListViewAdapter;
 import com.example.junyeop_imaciislab.firsttechscm.util.itemDAO;
@@ -20,22 +22,32 @@ public class TagReadActivity extends AppCompatActivity {
     private TextView NFCtagTextView;
     private ListView itemListView;
     private TextView modifiedTimeTextView;
-
+    private Handler autoRefresher;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tag_read);
         ButterKnife.inject(this);
+        new itemDAOListWrapper(this,NFCtagID).getItemDAOArrayList().clear();
         //NFCtagID = getNFCtagID();
-        NFCtagID = "T1510111"; // For Test
+        NFCtagID = "T1510141"; // For Test
     }
     @Override
     protected void onResume() {
         super.onResume();
         NFCtagTextView = (TextView)findViewById(R.id.txt_tagid);
         NFCtagTextView.setText(NFCtagID);
+        autoRefresher = new Handler();
+        autoRefresher.postDelayed(runnableAutoRefresh, 1500);
         drawListView();
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        autoRefresher.removeCallbacks(runnableAutoRefresh);
+    }
+
     private String getNFCtagID() {
         if(!getIntent().hasExtra("NFCtagID")) {
             AlertDialog.Builder alert = new AlertDialog.Builder(TagReadActivity.this);
@@ -67,9 +79,29 @@ public class TagReadActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-
     @OnClick(R.id.btn_refresh)
     public void refreshView() {
         drawListView();
     }
+
+    @OnClick(R.id.btn_get_stock)
+    public void onClickGetStock() {
+        Dialog dialog = new Dialog(this);
+        dialog.show();
+    }
+
+    @OnClick(R.id.btn_get_release)
+    public void onClickGetRelease() {
+        Dialog dialog = new Dialog(this);
+        dialog.show();
+    }
+
+    private final Runnable runnableAutoRefresh = new Runnable()
+    {
+        public void run()
+        {
+            drawListView();
+            TagReadActivity.this.autoRefresher.postDelayed(runnableAutoRefresh, 10000);
+        }
+    };
 }

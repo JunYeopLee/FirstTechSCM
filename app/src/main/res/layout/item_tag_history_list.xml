@@ -58,6 +58,7 @@
         </LinearLayout>
     </LinearLayout>
     <ImageButton
+        android:id="@+id/btn_history_detail"
         android:layout_width="45dp"
         android:layout_height="81dp"
         android:background="@android:color/transparent"

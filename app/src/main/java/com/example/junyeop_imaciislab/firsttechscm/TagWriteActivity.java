@@ -3,6 +3,7 @@ package com.example.junyeop_imaciislab.firsttechscm;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -21,14 +22,16 @@ public class TagWriteActivity extends AppCompatActivity {
     private TextView NFCtagTextView;
     private ListView itemListView;
     private TextView modifiedTimeTextView;
+    private Handler autoRefresher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tag_write);
         ButterKnife.inject(this);
+        new itemDAOListWrapper(this,NFCtagID).getItemDAOArrayList().clear();
         //NFCtagID = getNFCtagID();
-        NFCtagID = "T1510111"; // For Test
+        NFCtagID = "T1510141"; // For Test
 
     }
     @Override
@@ -36,7 +39,15 @@ public class TagWriteActivity extends AppCompatActivity {
         super.onResume();
         NFCtagTextView = (TextView)findViewById(R.id.txt_tagid);
         NFCtagTextView.setText(NFCtagID);
+        autoRefresher = new Handler();
+        autoRefresher.postDelayed(runnableAutoRefresh, 1500);
         drawListView();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        autoRefresher.removeCallbacks(runnableAutoRefresh);
     }
 
     private String getNFCtagID() {
@@ -82,4 +93,13 @@ public class TagWriteActivity extends AppCompatActivity {
         intent.putExtra("activityFrom", "TagWriteActivity");
         startActivity(intent);
     }
+
+    private final Runnable runnableAutoRefresh = new Runnable()
+    {
+        public void run()
+        {
+            drawListView();
+            TagWriteActivity.this.autoRefresher.postDelayed(runnableAutoRefresh, 10000);
+        }
+    };
 }

@@ -12,14 +12,28 @@ public class Constant {
     private static final String serverItemName = "ITEM_NAME";
     private static final String serverItemStatus = "TYPE";
     private static final String serverCategory = "NAME";
-    private static final String serverExpiryDate = "";
+    private static final String serverExpiryDate = "VALID_TIME";
     private static final String serverStandard = "ITEM_COUNT";
     private static final String serverUnit = "UNIT";
     private static final String serverAmount = "AMOUNT";
     private static final String serverPrice = "COST";
-    private static final String serverLocation = "";
-    private static final String serverCustomer = "";
+    private static final String serverLocation = "LOCATION";
+    private static final String serverCustomer = "PARTNER_NAME";
     private static final String serverTagModifiedTime =  "tag_modified_time";
+
+    private static final String statusUnregistered = "u";
+    private static final String statusStocked = "s";
+    private static final String statusReleased = "r";
+    private static final String statusReturned = "";
+    private static final String statusDiscard = "";
+
+    private static final String opStock = "";
+    private static final String opRelease="";
+    private static final String opReturn = "";
+    private static final String opDiscard ="";
+    private static final String opStockedCancel = "sr";
+    private static final String opsReleasedCancel = "rr";
+    private static final String opDiscardCancel = "";
 
     public static String getServerURL() {
         return serverURL;
@@ -79,5 +93,53 @@ public class Constant {
 
     public static String getServerTagModifiedTime() {
         return serverTagModifiedTime;
+    }
+
+    public static String getStatusUnregistered() {
+        return statusUnregistered;
+    }
+
+    public static String getStatusStocked() {
+        return statusStocked;
+    }
+
+    public static String getStatusReleased() {
+        return statusReleased;
+    }
+
+    public static String getStatusReturned() {
+        return statusReturned;
+    }
+
+    public static String getStatusDiscard() {
+        return statusDiscard;
+    }
+
+    public static String getOpStock() {
+        return opStock;
+    }
+
+    public static String getOpRelease() {
+        return opRelease;
+    }
+
+    public static String getOpReturn() {
+        return opReturn;
+    }
+
+    public static String getOpDiscard() {
+        return opDiscard;
+    }
+
+    public static String getOpStockedCancel() {
+        return opStockedCancel;
+    }
+
+    public static String getOpsReleasedCancel() {
+        return opsReleasedCancel;
+    }
+
+    public static String getOpDiscardCancel() {
+        return opDiscardCancel;
     }
 }

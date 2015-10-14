@@ -99,12 +99,14 @@ public class itemDAOListWrapper {
                         itemDAOObject.setItemName(jsonObject.getString(Constant.getServerItemName()));
                         itemDAOObject.setItemStatus(jsonObject.getString(Constant.getServerItemStatus()));
                         itemDAOObject.setCategory(jsonObject.getString(Constant.getServerCategory()));
-
+                        itemDAOObject.setExpirydate(jsonObject.getString(Constant.getServerExpiryDate()));
                         itemDAOObject.setStandard(jsonObject.getString(Constant.getServerStandard()));
                         itemDAOObject.setUnit(jsonObject.getString(Constant.getServerUnit()));
                         itemDAOObject.setAmount(jsonObject.getString(Constant.getServerAmount()));
                         itemDAOObject.setPrice(jsonObject.getString(Constant.getServerPrice()));
-
+                        itemDAOObject.setLocation(jsonObject.getString(Constant.getServerLocation()));
+                        itemDAOObject.setCustomer(jsonObject.getString(Constant.getServerCustomer()));
+                        itemDAOObject.setIsSelected(false);
                         itemDAOArrayList.add(itemDAOObject);
                     }
 

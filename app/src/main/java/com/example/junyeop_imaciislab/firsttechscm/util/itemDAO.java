@@ -14,6 +14,7 @@ public class itemDAO {
     private String price;
     private String location;
     private String customer;
+    private Boolean isSelected;
 
     public String getItemName() {
         return itemName;
@@ -93,5 +94,13 @@ public class itemDAO {
 
     public void setCustomer(String customer) {
         this.customer = customer;
+    }
+
+    public Boolean getIsSelected() {
+        return isSelected;
+    }
+
+    public void setIsSelected(Boolean isSelected) {
+        this.isSelected = isSelected;
     }
 }

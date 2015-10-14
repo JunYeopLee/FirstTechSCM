@@ -2,19 +2,25 @@ package com.example.junyeop_imaciislab.firsttechscm.adapter;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.junyeop_imaciislab.firsttechscm.ItemHistoryActivity;
 import com.example.junyeop_imaciislab.firsttechscm.R;
+import com.example.junyeop_imaciislab.firsttechscm.StatusSelectDialog;
+import com.example.junyeop_imaciislab.firsttechscm.util.Constant;
 import com.example.junyeop_imaciislab.firsttechscm.util.itemDAO;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-
+import java.util.Date;
 /**
  * Created by LeeJunYeop on 2015-10-11.
  */
@@ -22,7 +28,7 @@ public class ItemDAOListViewAdapter extends ArrayAdapter<itemDAO> {
     private Activity context;
     private ArrayList<itemDAO> itemDAOArrayList;
     private String activityFrom ="";
-
+    private float scale;
 
     public ArrayList<itemDAO> getItemDAOArrayList() {
         return itemDAOArrayList;
@@ -32,6 +38,7 @@ public class ItemDAOListViewAdapter extends ArrayAdapter<itemDAO> {
         super(context, R.layout.item_itemdao_list, itemDAOArrayList);
         this.context = context;
         this.itemDAOArrayList = itemDAOArrayList;
+        this.scale = context.getResources().getDisplayMetrics().density;
     }
 
     public ItemDAOListViewAdapter(Activity context, ArrayList<itemDAO> itemDAOArrayList,String activityFrom) {
@@ -39,6 +46,7 @@ public class ItemDAOListViewAdapter extends ArrayAdapter<itemDAO> {
         this.context = context;
         this.itemDAOArrayList = itemDAOArrayList;
         this.activityFrom = activityFrom;
+        this.scale = context.getResources().getDisplayMetrics().density;
     }
 
     @Override
@@ -51,22 +59,47 @@ public class ItemDAOListViewAdapter extends ArrayAdapter<itemDAO> {
         TextView itemNameTextView = (TextView)rowView.findViewById(R.id.txt_itemname);
         TextView categoryTextView = (TextView)rowView.findViewById(R.id.txt_category);
         ImageButton itemStatusButton = (ImageButton)rowView.findViewById(R.id.btn_item_status);
+        TextView expiryDateTextView = (TextView)rowView.findViewById(R.id.txt_expirydate);
         TextView standardTextView = (TextView)rowView.findViewById(R.id.txt_standard);
         TextView unitTextView = (TextView)rowView.findViewById(R.id.txt_unit);
         TextView priceTextView = (TextView)rowView.findViewById(R.id.txt_price);
         TextView amountTextView = (TextView)rowView.findViewById(R.id.txt_amount);
         TextView locationTextView = (TextView)rowView.findViewById(R.id.txt_location);
         TextView customerTextView = (TextView)rowView.findViewById(R.id.txt_customer);
+        final CheckBox itemCheckBox = (CheckBox)rowView.findViewById(R.id.ckbox_select_item);
 
-        itemDAO itemDAOObject = itemDAOArrayList.get(position);
+        final itemDAO itemDAOObject = itemDAOArrayList.get(position);
 
         itemNameTextView.setText(itemDAOObject.getItemName());
-        //itemStatusButton.setText(itemDAOObject.getItemStatus());
+        setItemStatus(itemStatusButton,itemDAOObject.getItemStatus());
         categoryTextView.setText(itemDAOObject.getCategory());
+        expiryDateTextView.setText(convertToDateform(itemDAOObject.getExpirydate()));
         standardTextView.setText(itemDAOObject.getStandard());
         unitTextView.setText(itemDAOObject.getUnit());
         priceTextView.setText(itemDAOObject.getPrice());
         amountTextView.setText(itemDAOObject.getAmount());
+        locationTextView.setText(itemDAOObject.getLocation());
+        customerTextView.setText(itemDAOObject.getCustomer());
+        Boolean isSelected = itemDAOObject.getIsSelected();
+
+        int dp5 = (int) (5 * scale + 0.5f);
+        int dp15 = (int) (15 * scale + 0.5f);
+        if(isSelected) {
+            rowView.findViewById(R.id.layout_itemdao_information).setBackground(context.getResources().getDrawable(R.drawable.border_itemdao_tab));
+            rowView.findViewById(R.id.layout_itemdao_information).setPadding(dp15, dp5, dp15, dp5);
+        } else {
+            rowView.findViewById(R.id.layout_itemdao_information).setBackground(context.getResources().getDrawable(R.drawable.border_itemdao));
+            rowView.findViewById(R.id.layout_itemdao_information).setPadding(dp15, dp5, dp15, dp5);
+        }
+
+        itemStatusButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                StatusSelectDialog statusSelectDialog = new StatusSelectDialog(context, itemDAOObject.getItemStatus());
+                statusSelectDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                statusSelectDialog.show();
+            }
+        });
 
         ImageButton itemHistoryButton = (ImageButton)rowView.findViewById(R.id.btn_item_history);
         itemHistoryButton.setOnClickListener(new View.OnClickListener() {
@@ -86,6 +119,28 @@ public class ItemDAOListViewAdapter extends ArrayAdapter<itemDAO> {
             return;
         } else { // FROM MainActivity for check inventory view
             view.findViewById(R.id.ckbox_select_item).setVisibility(View.INVISIBLE);
+        }
+    }
+
+    private String convertToDateform(String s) {
+        Date date = new Date(Long.valueOf(s));
+        SimpleDateFormat df = new SimpleDateFormat("yy-MM-dd");
+        return df.format(date);
+    }
+
+    private void setItemStatus(ImageButton b,String status) {
+        if(Constant.getStatusUnregistered().compareTo(status)==0) {
+            b.setImageResource(R.drawable.img_status_unregistered);
+        } else if(Constant.getStatusStocked().compareTo(status)==0) {
+            b.setImageResource(R.drawable.img_status_stocked);
+        } else if(Constant.getStatusReleased().compareTo(status)==0) {
+            b.setImageResource(R.drawable.img_status_released);
+        } else if(Constant.getStatusReturned().compareTo(status)==0) {
+            b.setImageResource(R.drawable.img_status_return);
+        } else if(Constant.getStatusDiscard().compareTo(status)==0) {
+            b.setImageResource(R.drawable.img_status_discard);
+        } else {
+            //Error handle
         }
     }
 }
