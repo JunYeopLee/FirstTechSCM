@@ -12,6 +12,8 @@ public class Constant {
     private static final String queryLogout = serverURL + "user/logout";
     private static final String queryGetItemHistory = serverURL + "item/{item_code}/history";
     private static final String queryGetItemHistoryParameter = "{item_code}";
+    private static final String queryTradeStatusUpdate = serverURL + "trade/{trade_code}/status";
+    private static final String queryTradeStatusUpdateParameter = "{trade_code}";
 
     private static final String serverItemName = "ITEM_NAME";
     private static final String serverItemStatus = "TYPE";
@@ -23,6 +25,8 @@ public class Constant {
     private static final String serverPrice = "COST";
     private static final String serverLocation = "LOCATION";
     private static final String serverCustomer = "PARTNER_NAME";
+    private static final String serverTradeCode = "TRADE_CODE";
+    private static final String serverItemCodeInTag = "ITEM_CODE";
     private static final String serverTagModifiedTime =  "tag_modified_time";
 
     private static final String serverItemCode = "CODE";
@@ -30,7 +34,7 @@ public class Constant {
     private static final String serverStatusHitory = "TYPE";
     private static final String serverCompanyName = "NAME";
 
-    private static final String statusUnregistered = "u";
+    private static final String statusUnregistered = "n";
     private static final String statusStocked = "s";
     private static final String statusReleased = "r";
     private static final String statusReturned = "b";
@@ -80,6 +84,14 @@ public class Constant {
         return queryGetItemHistoryParameter;
     }
 
+    public static String getQueryTradeStatusUpdate() {
+        return queryTradeStatusUpdate;
+    }
+
+    public static String getQueryTradeStatusUpdateParameter() {
+        return queryTradeStatusUpdateParameter;
+    }
+
     public static String getServerItemName() {
         return serverItemName;
     }
@@ -118,6 +130,14 @@ public class Constant {
 
     public static String getServerCustomer() {
         return serverCustomer;
+    }
+
+    public static String getServerTradeCode() {
+        return serverTradeCode;
+    }
+
+    public static String getServerItemCodeInTag() {
+        return serverItemCodeInTag;
     }
 
     public static String getServerTagModifiedTime() {

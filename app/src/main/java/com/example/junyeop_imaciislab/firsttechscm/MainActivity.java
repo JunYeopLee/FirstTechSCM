@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Intent intent = new Intent(MainActivity.this, com.example.junyeop_imaciislab.firsttechscm.NFCTaggingActivity.class);
-                Intent intent = new Intent(MainActivity.this, NFCTaggingActivity.class); // For Test
+                Intent intent = new Intent(MainActivity.this, TagReadActivity.class); // For Test
                 intent.putExtra("activityToGo","read");
                 startActivity(intent);
             }

@@ -38,7 +38,7 @@ public class InventoryDetailActivity extends AppCompatActivity {
         detailItemListView = (ListView)findViewById(R.id.listview_detail_item);
         ArrayList<itemDAO> itemDAOArrayList = new ArrayList<>();
         itemDAO itemDAOObject = new itemDAO();
-        itemDAOObject.setItemStatus("u"); itemDAOObject.setExpirydate("11111111"); itemDAOObject.setIsSelected(false);
+        itemDAOObject.setItemStatus("n"); itemDAOObject.setExpirydate("11111111"); itemDAOObject.setIsSelected(false);
         itemDAOArrayList.add(itemDAOObject);
         itemDAOArrayList.add(itemDAOObject);
         itemDAOArrayList.add(itemDAOObject);

@@ -98,7 +98,7 @@ public class ItemDAOListViewAdapter extends ArrayAdapter<itemDAO> {
         itemStatusButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                StatusSelectDialog statusSelectDialog = new StatusSelectDialog(context, itemDAOObject.getItemStatus());
+                StatusSelectDialog statusSelectDialog = new StatusSelectDialog(context, itemDAOObject.getItemStatus(), itemDAOObject.getTradeCode());
                 statusSelectDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 statusSelectDialog.show();
             }
@@ -109,6 +109,7 @@ public class ItemDAOListViewAdapter extends ArrayAdapter<itemDAO> {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, ItemHistoryActivity.class);
+                intent.putExtra("ItemCode",itemDAOObject.getItemCode());
                 context.overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out);
                 context.startActivity(intent);
             }
