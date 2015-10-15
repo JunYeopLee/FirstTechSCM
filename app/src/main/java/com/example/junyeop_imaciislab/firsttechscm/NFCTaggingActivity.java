@@ -3,8 +3,10 @@ package com.example.junyeop_imaciislab.firsttechscm;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.os.Bundle;
@@ -12,12 +14,18 @@ import android.os.Parcelable;
 import android.provider.Settings;
 import android.widget.Toast;
 
+import com.example.junyeop_imaciislab.firsttechscm.util.Constant;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class NFCTaggingActivity extends Activity {
     public static final String TAG = "NFCTaggingActivity";
 
     private NfcAdapter mNfcAdapter;
     private PendingIntent mPendingIntent;
     private String activityToGo="";
+    private SQLiteDatabase tagHistoryDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +33,9 @@ public class NFCTaggingActivity extends Activity {
         setContentView(R.layout.activity_nfctagging);
         resolveIntent(getIntent());
         activityToGo = getIntent().getExtras().getString("activityToGo");
+
+        tagHistoryDB = openOrCreateDatabase(Constant.getSqlTagHistoryDBName(), Context.MODE_PRIVATE, null);
+        tagHistoryDB.execSQL(Constant.getSqlCreateTable());
 
         Toast.makeText(this, activityToGo, Toast.LENGTH_LONG).show();
 
@@ -92,6 +103,11 @@ public class NFCTaggingActivity extends Activity {
             StringBuilder sb = new StringBuilder();
             byte[] id = ((Tag)tag).getId();
             Toast.makeText(this, sb.append("Tag ID (HEX): ").append(getHex(id)).toString(), Toast.LENGTH_LONG).show();
+            tagHistoryDB.execSQL("insert into " + Constant.getSqlTableName() + " values(null, '" +
+                    getHex(id) + "', '" +
+                    new SimpleDateFormat("yy-MM-dd  hh:mm:ss").format(new Date(System.currentTimeMillis())) + "', '" +
+                    "고등어(소금안친거)외 4종" +
+                    "');");
 
             if(activityToGo.compareTo("write")==0) {
                 Intent writeIntent = new Intent(NFCTaggingActivity.this, com.example.junyeop_imaciislab.firsttechscm.TagWriteActivity.class);

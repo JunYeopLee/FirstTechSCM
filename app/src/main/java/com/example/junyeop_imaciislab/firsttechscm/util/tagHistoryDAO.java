@@ -4,9 +4,19 @@ package com.example.junyeop_imaciislab.firsttechscm.util;
  * Created by LeeJunYeop on 2015-10-11.
  */
 public class tagHistoryDAO {
+    private int key;
     private String tagID;
-    private String modifiedTime;
+    private String createdTime;
     private String summary;
+    private Boolean isSelected;
+
+    public void setKey(int key) {
+        this.key = key;
+    }
+
+    public int getKey() {
+        return key;
+    }
 
     public String getTagID() {
         return tagID;
@@ -16,12 +26,12 @@ public class tagHistoryDAO {
         this.tagID = tagID;
     }
 
-    public String getModifiedTime() {
-        return modifiedTime;
+    public String getCreatedTime() {
+        return createdTime;
     }
 
-    public void setModifiedTime(String modifiedTime) {
-        this.modifiedTime = modifiedTime;
+    public void setCreatedTime(String modifiedTime) {
+        this.createdTime = modifiedTime;
     }
 
     public String getSummary() {
@@ -30,5 +40,13 @@ public class tagHistoryDAO {
 
     public void setSummary(String summary) {
         this.summary = summary;
+    }
+
+    public Boolean getIsSelected() {
+        return isSelected;
+    }
+
+    public void setIsSelected(Boolean isSelected) {
+        this.isSelected = isSelected;
     }
 }

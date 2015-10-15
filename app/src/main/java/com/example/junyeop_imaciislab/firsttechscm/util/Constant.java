@@ -45,8 +45,18 @@ public class Constant {
     private static final String opReturn = "b";
     private static final String opDiscard ="d";
     private static final String opStockedCancel = "sr";
-    private static final String opsReleasedCancel = "rr";
+    private static final String opReleasedCancel = "rr";
+    private static final String opReturnedCancel = "br";
     private static final String opDiscardCancel = "dr";
+
+    private static final String sqlTagHistoryDBName = "TagHistory";
+    private static final String sqlTableName = "TAG_HISTORY_TB";
+    private static final String sqlCreateTable = "CREATE TABLE if not exists "+sqlTableName+"(" +
+                                                "key INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                                                "NFCtagID TEXT, " +
+                                                "tagTime TEXT," +
+                                                "summary TEXT);";
+    private static final String sqlSelectAll = "SELECT * FROM " + sqlTableName;
 
     private static final HashMap<String,String> enumToStatus = new HashMap<String,String>() {
         {
@@ -200,8 +210,12 @@ public class Constant {
         return opStockedCancel;
     }
 
-    public static String getOpsReleasedCancel() {
-        return opsReleasedCancel;
+    public static String getOpReleasedCancel() {
+        return opReleasedCancel;
+    }
+
+    public static String getOpReturnedCancel() {
+        return opReturnedCancel;
     }
 
     public static String getOpDiscardCancel() {
@@ -210,5 +224,21 @@ public class Constant {
 
     public static HashMap getEnumToStatus() {
         return enumToStatus;
+    }
+
+    public static String getSqlTagHistoryDBName() {
+        return sqlTagHistoryDBName;
+    }
+
+    public static String getSqlTableName() {
+        return sqlTableName;
+    }
+
+    public static String getSqlCreateTable() {
+        return sqlCreateTable;
+    }
+
+    public static String getSqlSelectAll() {
+        return sqlSelectAll;
     }
 }
