@@ -1,21 +1,32 @@
 package com.example.junyeop_imaciislab.firsttechscm.util;
 
+import java.io.Serializable;
+
 /**
  * Created by LeeJunYeop on 2015-10-12.
  */
-public class checkInventoryDAO {
-    private String inventoryName;
+public class checkInventoryDAO implements Serializable {
+    private String itemCode;
+    private String itemName;
     private String category;
     private String standard;
     private String unit;
     private String amount;
 
-    public String getInventoryName() {
-        return inventoryName;
+    public String getItemCode() {
+        return itemCode;
     }
 
-    public void setInventoryName(String inventoryName) {
-        this.inventoryName = inventoryName;
+    public void setItemCode(String itemCode) {
+        this.itemCode = itemCode;
+    }
+
+    public String getItemName() {
+        return itemName;
+    }
+
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
     }
 
     public String getCategory() {

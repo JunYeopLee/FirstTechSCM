@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.example.junyeop_imaciislab.firsttechscm.InventoryDetailActivity;
 import com.example.junyeop_imaciislab.firsttechscm.R;
@@ -30,8 +31,21 @@ public class CheckInventoryListViewAdapter   extends ArrayAdapter<checkInventory
 
     @Override
     public View getView(final int position, View view, final ViewGroup parent) {
-        LayoutInflater inflater = context.getLayoutInflater();
+        final LayoutInflater inflater = context.getLayoutInflater();
         View rowView = inflater.inflate(R.layout.item_check_inventory_list, null, true);
+
+        final checkInventoryDAO checkInventoryDAOObject = checkInventoryDAOArrayList.get(position);
+        TextView itemNameTextView = (TextView)rowView.findViewById(R.id.txt_itemname);
+        TextView categoryTextView = (TextView)rowView.findViewById(R.id.txt_category);
+        TextView standardTextView = (TextView)rowView.findViewById(R.id.txt_standard);
+        TextView unitTextView = (TextView)rowView.findViewById(R.id.txt_unit);
+        TextView amountTextView = (TextView)rowView.findViewById(R.id.txt_amount);
+
+        itemNameTextView.setText(checkInventoryDAOObject.getItemName());
+        categoryTextView.setText(checkInventoryDAOObject.getCategory());
+        standardTextView.setText(checkInventoryDAOObject.getStandard());
+        unitTextView.setText(checkInventoryDAOObject.getUnit());
+        amountTextView.setText(checkInventoryDAOObject.getAmount());
 
         ImageButton checkDetailButton = (ImageButton)rowView.findViewById(R.id.btn_check_detail);
         checkDetailButton.setOnClickListener(new View.OnClickListener() {
@@ -39,6 +53,7 @@ public class CheckInventoryListViewAdapter   extends ArrayAdapter<checkInventory
             public void onClick(View v) {
                 Intent intent = new Intent(context, InventoryDetailActivity.class);
                 intent.putExtra("activityFrom",activityFrom);
+                intent.putExtra("checkInventoryDAO",checkInventoryDAOObject);
                 context.startActivity(intent);
             }
         });

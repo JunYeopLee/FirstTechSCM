@@ -14,6 +14,7 @@ public class Constant {
     private static final String queryGetItemHistoryParameter = "{item_code}";
     private static final String queryTradeStatusUpdate = serverURL + "trade/{trade_code}/status";
     private static final String queryTradeStatusUpdateParameter = "{trade_code}";
+    private static final String querySearchItem = serverURL+"/item";
 
     private static final String serverItemName = "ITEM_NAME";
     private static final String serverItemStatus = "TYPE";
@@ -58,6 +59,20 @@ public class Constant {
                                                 "summary TEXT);";
     private static final String sqlSelectAll = "SELECT * FROM " + sqlTableName;
 
+    private static final String searchedItemCode = "CODE";
+    private static final String searchedItemName = "NAME";
+    private static final String searchedItemCategory = "SUB_CATEGORY_CODE";
+    private static final String searchedItemUnit ="UNIT";
+    private static final String searchedItemAmount ="AMOUNT";
+
+    private static final String sqlInventoryDBName = "Inventory";
+    private static final String sqlInventoryTableName = "INVENTORY_TB";
+    private static final String sqlCreateInventoryTable = "CREATE TABLE if not exists "+sqlInventoryTableName+"(" +
+                                                "key INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                                                "ItemCode TEXT, " +
+                                                "ItemName TEXT," +
+                                                "summary TEXT);";
+
     private static final HashMap<String,String> enumToStatus = new HashMap<String,String>() {
         {
             put("s", "입고");
@@ -100,6 +115,10 @@ public class Constant {
 
     public static String getQueryTradeStatusUpdateParameter() {
         return queryTradeStatusUpdateParameter;
+    }
+
+    public static String getQuerySearchItem() {
+        return querySearchItem;
     }
 
     public static String getServerItemName() {
@@ -240,5 +259,37 @@ public class Constant {
 
     public static String getSqlSelectAll() {
         return sqlSelectAll;
+    }
+
+    public static String getSearchedItemCode() {
+        return searchedItemCode;
+    }
+
+    public static String getSearchedItemCategory() {
+        return searchedItemCategory;
+    }
+
+    public static String getSearchedItemUnit() {
+        return searchedItemUnit;
+    }
+
+    public static String getSearchedItemAmount() {
+        return searchedItemAmount;
+    }
+
+    public static String getSearchedItemName() {
+        return searchedItemName;
+    }
+
+    public static String getSqlCreateInventoryTable() {
+        return sqlCreateInventoryTable;
+    }
+
+    public static String getSqlInventoryDBName() {
+        return sqlInventoryDBName;
+    }
+
+    public static String getSqlInventoryTableName() {
+        return sqlInventoryTableName;
     }
 }
