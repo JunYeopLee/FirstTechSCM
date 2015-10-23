@@ -131,7 +131,7 @@ public class NFCTaggingActivity extends Activity {
                 sb.append('0');
             sb.append(Integer.toHexString(b));
             if (i < bytes.length-1) {
-                sb.append(":");
+                //sb.append(":");
             }
         }
         return sb.toString();

@@ -50,15 +50,14 @@ public class TagHistoryListViewAdapter  extends ArrayAdapter<tagHistoryDAO> {
         createdTimeTextView.setText(tagHistoryDAOObject.getCreatedTime());
         summaryTextView.setText(tagHistoryDAOObject.getSummary());
 
-        String NFCtagID = tagHistoryDAOObject.getTagID();
-
         ImageButton historyDetailButton = (ImageButton)rowView.findViewById(R.id.btn_history_detail);
         historyDetailButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String NFCtagID = tagHistoryDAOObject.getTagID();
                 Intent readIntent = new Intent(context, TagReadActivity.class);
-                //readIntent.putExtra("NFCtagID", NFCtagID);
-                readIntent.putExtra("NFCtagID", "T1510111");
+                readIntent.putExtra("NFCtagID", NFCtagID);
+                //readIntent.putExtra("NFCtagID", "T1510111");
                 context.startActivity(readIntent);
             }
         });

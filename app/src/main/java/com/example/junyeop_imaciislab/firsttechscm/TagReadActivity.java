@@ -46,8 +46,8 @@ public class TagReadActivity extends AppCompatActivity {
         setContentView(R.layout.activity_tag_read);
         ButterKnife.inject(this);
         context = this;
-        //NFCtagID = getNFCtagID();
-        NFCtagID = "T1510141"; // For Test
+        NFCtagID = getNFCtagID();
+        //NFCtagID = "T1510141"; // For Test
         receiveTradeInformationHandlerObject = new receiveTradeInformationHandler(this);
     }
 
@@ -79,7 +79,7 @@ public class TagReadActivity extends AppCompatActivity {
     private void drawListView() {
         AsyncHttpClient client = new AsyncHttpClient();
         RequestParams requestParams = new RequestParams();
-        requestParams.add("tags_code", NFCtagID);
+        requestParams.add("hf_tag", NFCtagID);
         getCookieFromStore(client);
         // Execute query for tag information and getItemDAOArrayList from server
         client.get(Constant.getQueryTagsTrade(), requestParams, receiveTradeInformationHandlerObject);

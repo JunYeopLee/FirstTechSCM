@@ -41,8 +41,8 @@ public class TagWriteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_tag_write);
         ButterKnife.inject(this);
         context = this;
-        //NFCtagID = getNFCtagID();
-        NFCtagID = "T1510141"; // For Test
+        NFCtagID = getNFCtagID();
+        //NFCtagID = "T1510141"; // For Test
     }
     @Override
     protected void onResume() {
@@ -72,7 +72,7 @@ public class TagWriteActivity extends AppCompatActivity {
     private void drawListView() {
         AsyncHttpClient client = new AsyncHttpClient();
         RequestParams requestParams = new RequestParams();
-        requestParams.add("tags_code", NFCtagID);
+        requestParams.add("hf_tag", NFCtagID);
         // Set Cookie from store(JSESSIONID)
         CookieStore cookieStore = new PersistentCookieStore(context);
         client.setCookieStore(cookieStore);

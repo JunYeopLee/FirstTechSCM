@@ -96,7 +96,7 @@ public class ItemHistoryActivity extends Activity {
 
     /**
      *
-     * For receive item history informaton from Server
+     * For receive item history information from Server
      *
      */
     private class receiveItemHistoryHandler extends JsonHttpResponseHandler {
