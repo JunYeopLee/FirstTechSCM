@@ -2,6 +2,7 @@ package com.example.junyeop_imaciislab.firsttechscm;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageButton;
@@ -79,6 +80,7 @@ public class StatusSelectDialog extends Dialog {
         RequestParams params = new RequestParams();
         params.add("type", status);
         getCookieFromStore(client);
+        Log.d("StatusSelectDialog", "Query : " + Query + " tradeCode : " + tradeCode + " status : " + status);
         client.post(Query, params, new sendTradeStatusUpdateHandler(context));
         this.dismiss();
     }

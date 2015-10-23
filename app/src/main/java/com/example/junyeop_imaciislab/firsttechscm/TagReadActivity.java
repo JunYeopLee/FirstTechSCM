@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -46,9 +47,8 @@ public class TagReadActivity extends AppCompatActivity {
         setContentView(R.layout.activity_tag_read);
         ButterKnife.inject(this);
         context = this;
-        NFCtagID = getNFCtagID();
-        //NFCtagID = "T1510141"; // For Test
-        receiveTradeInformationHandlerObject = new receiveTradeInformationHandler(this);
+        //NFCtagID = getNFCtagID();
+        NFCtagID = "04b8d1496b0280"; // For Test
     }
 
     @Override
@@ -81,6 +81,7 @@ public class TagReadActivity extends AppCompatActivity {
         RequestParams requestParams = new RequestParams();
         requestParams.add("hf_tag", NFCtagID);
         getCookieFromStore(client);
+        receiveTradeInformationHandlerObject = new receiveTradeInformationHandler(this);
         // Execute query for tag information and getItemDAOArrayList from server
         client.get(Constant.getQueryTagsTrade(), requestParams, receiveTradeInformationHandlerObject);
     }
@@ -172,6 +173,7 @@ public class TagReadActivity extends AppCompatActivity {
         RequestParams params = new RequestParams();
         params.add("type", status);
         getCookieFromStore(client);
+        Log.d("TagReadActivity", "Query : " + Query + " tradeCode : " + tradeCode + " status : " + status);
         client.post(Query,params,new sendTradeStatusUpdateHandler(context));
     }
 
