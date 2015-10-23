@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         LoginSharedPreferences = getSharedPreferences("login",MODE_PRIVATE);
         //UserIdtxt = (TextView)findViewById(R.id.txt_userid);
         //UserIdtxt.setText("USER ID : " + LoginSharedPreferences.getString("username",""));
-
+        
         TagReadButton = (ImageButton)findViewById(R.id.btn_tag_read);
         TagWriteButton = (ImageButton)findViewById(R.id.btn_tag_write);
         TagHistoryButton = (ImageButton)findViewById(R.id.btn_tag_history);
