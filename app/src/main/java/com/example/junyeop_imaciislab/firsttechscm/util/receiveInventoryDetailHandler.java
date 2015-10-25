@@ -12,19 +12,21 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 import cz.msebera.android.httpclient.Header;
 
 /**
- * Created by LeeJunYeop on 2015-10-16.
+ * Created by junyeop_imaciislab on 2015. 10. 25..
  */
-public class sendTradeStatusUpdateHandler extends JsonHttpResponseHandler {
+public class receiveInventoryDetailHandler extends JsonHttpResponseHandler {
     private ProgressDialog dialog;
     private Context context;
+    private ArrayList<itemDAO> inventoryDetailList = new ArrayList<>();
 
-    public sendTradeStatusUpdateHandler(Context context) {
+    public receiveInventoryDetailHandler(Context context) {
         this.context = context;
     }
-
     @Override
     public void onStart() {
         dialog = new ProgressDialog(context);
@@ -38,7 +40,7 @@ public class sendTradeStatusUpdateHandler extends JsonHttpResponseHandler {
         if(dialog != null && dialog.isShowing()){
             dialog.dismiss();
         }
-        Toast.makeText(context,"작업 성공",Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, "작업 성공", Toast.LENGTH_SHORT).show();
         if (((Activity)context).getLocalClassName().compareTo("TagReadActivity") == 0) {
             ((TagReadActivity) context).drawListView();
         }
@@ -57,5 +59,9 @@ public class sendTradeStatusUpdateHandler extends JsonHttpResponseHandler {
             }
         });
         alert.setMessage("[태그정보 수신 실패]네트워크 연결이 불안정 합니다").show();
+    }
+
+    public ArrayList<itemDAO> getInventoryDetailList() {
+        return inventoryDetailList;
     }
 }

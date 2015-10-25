@@ -35,10 +35,9 @@ public class NFCTaggingActivity extends Activity {
         activityToGo = getIntent().getExtras().getString("activityToGo");
 
         tagHistoryDB = openOrCreateDatabase(Constant.getSqlTagHistoryDBName(), Context.MODE_PRIVATE, null);
-        tagHistoryDB.execSQL(Constant.getSqlCreateTable());
+        tagHistoryDB.execSQL(Constant.getSqlCreateTable().replace(Constant.getSqlDefaultTableName(), Constant.getSqluserTableName()));
 
         Toast.makeText(this, activityToGo, Toast.LENGTH_LONG).show();
-
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
         if(mNfcAdapter==null) {
             AlertDialog.Builder alert = new AlertDialog.Builder(NFCTaggingActivity.this);
@@ -103,7 +102,7 @@ public class NFCTaggingActivity extends Activity {
             StringBuilder sb = new StringBuilder();
             byte[] id = ((Tag)tag).getId();
             Toast.makeText(this, sb.append("Tag ID (HEX): ").append(getHex(id)).toString(), Toast.LENGTH_LONG).show();
-            tagHistoryDB.execSQL("insert into " + Constant.getSqlTableName() + " values(null, '" +
+            tagHistoryDB.execSQL("insert into " + Constant.getSqluserTableName() + " values(null, '" +
                     getHex(id) + "', '" +
                     new SimpleDateFormat("yy-MM-dd  hh:mm:ss").format(new Date(System.currentTimeMillis())) + "', '" +
                     "고등어(소금안친거)외 4종" +

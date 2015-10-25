@@ -7,7 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.widget.Toast;
 
-import com.example.junyeop_imaciislab.firsttechscm.TagReadActivity;
+import com.example.junyeop_imaciislab.firsttechscm.TagWriteActivity;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONObject;
@@ -15,13 +15,13 @@ import org.json.JSONObject;
 import cz.msebera.android.httpclient.Header;
 
 /**
- * Created by LeeJunYeop on 2015-10-16.
+ * Created by junyeop_imaciislab on 2015. 10. 25..
  */
-public class sendTradeStatusUpdateHandler extends JsonHttpResponseHandler {
+public class sendCreateTagsTradeHandler extends JsonHttpResponseHandler {
     private ProgressDialog dialog;
     private Context context;
 
-    public sendTradeStatusUpdateHandler(Context context) {
+    public sendCreateTagsTradeHandler(Context context) {
         this.context = context;
     }
 
@@ -38,9 +38,9 @@ public class sendTradeStatusUpdateHandler extends JsonHttpResponseHandler {
         if(dialog != null && dialog.isShowing()){
             dialog.dismiss();
         }
-        Toast.makeText(context,"작업 성공",Toast.LENGTH_SHORT).show();
-        if (((Activity)context).getLocalClassName().compareTo("TagReadActivity") == 0) {
-            ((TagReadActivity) context).drawListView();
+        Toast.makeText(context, "작업 성공", Toast.LENGTH_SHORT).show();
+        if (((Activity)context).getLocalClassName().compareTo("InventoryDetailActivity") == 0) {
+            ((TagWriteActivity) context).drawListView();
         }
     }
 

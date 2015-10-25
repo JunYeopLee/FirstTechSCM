@@ -6,6 +6,19 @@ import java.util.HashMap;
  * Created by LeeJunYeop on 2015-10-11.
  */
 public class Constant {
+    /**
+     *
+     * User private information, Non final, set on MainActivity
+     *
+     * */
+    private static String userName="";
+    private static String sqluserTableName="";
+
+    /**
+     *
+     * Application constant information, NO SETTER, ONLY GETTER
+     *
+     * */
     private static final String serverURL = "http://166.104.142.190:50000/ftscm/";
     private static final String queryTagsTrade = serverURL + "tags_trade";
     private static final String queryLogin = serverURL + "user/login";
@@ -51,13 +64,21 @@ public class Constant {
     private static final String opDiscardCancel = "dr";
 
     private static final String sqlTagHistoryDBName = "TagHistory";
-    private static final String sqlTableName = "TAG_HISTORY_TB";
-    private static final String sqlCreateTable = "CREATE TABLE if not exists "+sqlTableName+"(" +
+    private static final String sqlDefaultTableName = "TAG_HISTORY_TB";
+    private static final String sqlCreateTable = "CREATE TABLE if not exists "+sqlDefaultTableName+"(" +
                                                 "key INTEGER PRIMARY KEY AUTOINCREMENT, " +
                                                 "NFCtagID TEXT, " +
                                                 "tagTime TEXT," +
-                                                "summary TEXT);";
-    private static final String sqlSelectAll = "SELECT * FROM " + sqlTableName;
+                                                "summary TEXT);";  // MUST be used after replace sqlDefaultTableName to sqluserTableName
+    private static final String sqlSelectAll = "SELECT * FROM " + sqlDefaultTableName; // MUST be used after replace sqlDefaultTableName to sqluserTableName
+
+    private static final String sqlInventoryDBName = "Inventory";
+    private static final String sqlInventoryTableName = "INVENTORY_TB";
+    private static final String sqlCreateInventoryTable = "CREATE TABLE if not exists "+sqlInventoryTableName+"(" +
+            "key INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            "ItemCode TEXT, " +
+            "ItemName TEXT," +
+            "summary TEXT);";
 
     private static final String searchedItemCode = "CODE";
     private static final String searchedItemName = "NAME";
@@ -65,13 +86,6 @@ public class Constant {
     private static final String searchedItemUnit ="UNIT";
     private static final String searchedItemAmount ="AMOUNT";
 
-    private static final String sqlInventoryDBName = "Inventory";
-    private static final String sqlInventoryTableName = "INVENTORY_TB";
-    private static final String sqlCreateInventoryTable = "CREATE TABLE if not exists "+sqlInventoryTableName+"(" +
-                                                "key INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                                                "ItemCode TEXT, " +
-                                                "ItemName TEXT," +
-                                                "summary TEXT);";
 
     private static final HashMap<String,String> enumToStatus = new HashMap<String,String>() {
         {
@@ -84,6 +98,7 @@ public class Constant {
             put("dr", "폐기취소");
         }
     };
+
 
     public static String getServerURL() {
         return serverURL;
@@ -249,8 +264,8 @@ public class Constant {
         return sqlTagHistoryDBName;
     }
 
-    public static String getSqlTableName() {
-        return sqlTableName;
+    public static String getSqlDefaultTableName() {
+        return sqlDefaultTableName;
     }
 
     public static String getSqlCreateTable() {
@@ -291,5 +306,21 @@ public class Constant {
 
     public static String getSqlInventoryTableName() {
         return sqlInventoryTableName;
+    }
+
+    public static String getUserName() {
+        return userName;
+    }
+
+    public static void setUserName(String userName) {
+        Constant.userName = userName;
+    }
+
+    public static String getSqluserTableName() {
+        return sqluserTableName;
+    }
+
+    public static void setSqluserTableName(String sqluserTableName) {
+        Constant.sqluserTableName = sqluserTableName;
     }
 }
