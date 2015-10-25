@@ -54,7 +54,6 @@ public class ItemDAOListViewAdapter extends ArrayAdapter<itemDAO> {
     public View getView(final int position, View view, final ViewGroup parent) {
         LayoutInflater inflater = context.getLayoutInflater();
         final View rowView = inflater.inflate(R.layout.item_itemdao_list, null, true);
-
         setInvisibleSomeComponent(rowView);
 
         TextView itemNameTextView = (TextView)rowView.findViewById(R.id.txt_itemname);
@@ -95,14 +94,16 @@ public class ItemDAOListViewAdapter extends ArrayAdapter<itemDAO> {
             rowView.findViewById(R.id.layout_itemdao_information).setPadding(dp15, dp5, dp15, dp5);
         }
 
-        itemStatusButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                StatusSelectDialog statusSelectDialog = new StatusSelectDialog(context, itemDAOObject.getItemStatus(), itemDAOObject.getTradeCode());
-                statusSelectDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                statusSelectDialog.show();
-            }
-        });
+        if (context.getLocalClassName().compareTo("TagReadActivity") == 0) { // If ListView is in TagReadActivity, set stock,release module
+            itemStatusButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    StatusSelectDialog statusSelectDialog = new StatusSelectDialog(context, itemDAOObject.getItemStatus(), itemDAOObject.getTradeCode());
+                    statusSelectDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    statusSelectDialog.show();
+                }
+            });
+        }
 
         ImageButton itemHistoryButton = (ImageButton)rowView.findViewById(R.id.btn_item_history);
         itemHistoryButton.setOnClickListener(new View.OnClickListener() {

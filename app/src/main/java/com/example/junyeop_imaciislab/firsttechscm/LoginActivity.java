@@ -55,7 +55,7 @@ public class LoginActivity extends Activity {
             LoginButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    username = ((EditText)findViewById(R.id.edit_id)).getText().toString(); ;
+                    username = ((EditText)findViewById(R.id.edit_id)).getText().toString();
                     password = ((EditText)findViewById(R.id.edit_pw)).getText().toString();
                     RequestParams params = new RequestParams();
                     params.add("username",username);

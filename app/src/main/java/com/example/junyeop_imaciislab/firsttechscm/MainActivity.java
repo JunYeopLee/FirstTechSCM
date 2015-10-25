@@ -2,9 +2,11 @@ package com.example.junyeop_imaciislab.firsttechscm;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -31,11 +33,15 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton TagHistoryButton;
     private ImageButton CheckInventoryButton;
     private ImageButton LogOutButton;
+    private SQLiteDatabase tagHistoryDB;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         LoginSharedPreferences = getSharedPreferences("login",MODE_PRIVATE);
+        Constant.setUserName(LoginSharedPreferences.getString("username", ""));
+        Constant.setSqluserTableName(Constant.getUserName()+Constant.getSqlDefaultTableName());
         //UserIdtxt = (TextView)findViewById(R.id.txt_userid);
         //UserIdtxt.setText("USER ID : " + LoginSharedPreferences.getString("username",""));
         
@@ -86,9 +92,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 AsyncHttpClient client = new AsyncHttpClient();
-                client.post(Constant.getQueryLogout(),new LogoutAsyncHttpResponseHandler());
+                client.post(Constant.getQueryLogout(), new LogoutAsyncHttpResponseHandler());
             }
         });
+        tagHistoryDB = openOrCreateDatabase(Constant.getSqlTagHistoryDBName(), Context.MODE_PRIVATE, null);
+        tagHistoryDB.execSQL(Constant.getSqlCreateTable().replace(Constant.getSqlDefaultTableName(),Constant.getSqluserTableName()));
     }
 
     /**

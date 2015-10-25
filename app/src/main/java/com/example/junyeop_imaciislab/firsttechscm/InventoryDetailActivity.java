@@ -77,6 +77,7 @@ public class InventoryDetailActivity extends AppCompatActivity {
             Log.d(TAG,"invisibleSomeComponent ERROR");
             return;
         } else if(activityFrom.compareTo("TagWriteActivity")==0) {
+
             return;
         } else { // FROM MainActivity for check inventory view
             findViewById(R.id.layout_forconfirm).setVisibility(View.GONE);

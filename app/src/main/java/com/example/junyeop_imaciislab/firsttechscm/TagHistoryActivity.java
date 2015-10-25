@@ -2,9 +2,8 @@ package com.example.junyeop_imaciislab.firsttechscm;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.ImageButton;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
 
 import com.example.junyeop_imaciislab.firsttechscm.adapter.TagHistoryListViewAdapter;
@@ -41,7 +40,7 @@ public class TagHistoryActivity extends AppCompatActivity {
     }
 
     private void selectAlltagHistory(){
-        String sql = Constant.getSqlSelectAll();
+        String sql = Constant.getSqlSelectAll().replace(Constant.getSqlDefaultTableName(), Constant.getSqluserTableName());
         Cursor results = tagHistoryDB.rawQuery(sql, null);
         results.moveToFirst();
         tagHistoryDAOArrayList.clear();
@@ -63,7 +62,7 @@ public class TagHistoryActivity extends AppCompatActivity {
         for( int i = 0 ; i < tagHistoryDAOArrayList.size() ; i++ ) {
             if(tagHistoryDAOArrayList.get(i).getIsSelected()) {
                 int key = tagHistoryDAOArrayList.get(i).getKey();
-                tagHistoryDB.execSQL("DELETE FROM " + Constant.getSqlTableName() + " WHERE key=" + String.valueOf(key) +";");
+                tagHistoryDB.execSQL("DELETE FROM " + Constant.getSqluserTableName() + " WHERE key=" + String.valueOf(key) +";");
             }
         }
         selectAlltagHistory();

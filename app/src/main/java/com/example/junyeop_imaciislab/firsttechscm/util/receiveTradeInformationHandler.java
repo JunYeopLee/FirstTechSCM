@@ -23,6 +23,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -81,6 +83,13 @@ public class receiveTradeInformationHandler extends JsonHttpResponseHandler {
                 tagModifiedTime = response.getJSONObject("result").getString(Constant.getServerTagModifiedTime()); // get tag modified time
                 modifiedTimeTextView = (TextView)((Activity)context).findViewById(R.id.txt_modified_time);
                 modifiedTimeTextView.setText(tagModifiedTime);
+
+                Collections.sort(itemDAOArrayList, new Comparator<itemDAO>() {
+                    @Override
+                    public int compare(itemDAO p1, itemDAO p2) {
+                        return p1.getItemName().compareTo(p2.getItemName());
+                    }
+                });
 
                 ItemDAOListViewAdapter itemDAOListViewAdapter = new ItemDAOListViewAdapter(((Activity)context),itemDAOArrayList);
                 itemListView = (ListView)((Activity) context).findViewById(R.id.listview_tagitem);

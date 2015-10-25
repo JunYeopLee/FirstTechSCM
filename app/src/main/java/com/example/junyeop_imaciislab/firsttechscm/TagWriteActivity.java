@@ -41,15 +41,15 @@ public class TagWriteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_tag_write);
         ButterKnife.inject(this);
         context = this;
-        //NFCtagID = getNFCtagID();
-        NFCtagID = "04b8d1496b0280"; // For Test
+        NFCtagID = getNFCtagID();
+        //NFCtagID = "04b8d1496b0280"; // For Test
     }
     @Override
     protected void onResume() {
         super.onResume();
         NFCtagTextView.setText(NFCtagID);
         autoRefresher = new Handler();
-        autoRefresher.postDelayed(runnableAutoRefresh, 30000);
+        autoRefresher.postDelayed(runnableAutoRefresh, 300000);
         drawListView();
     }
 
@@ -128,7 +128,7 @@ public class TagWriteActivity extends AppCompatActivity {
         public void run()
         {
             drawListView();
-            TagWriteActivity.this.autoRefresher.postDelayed(runnableAutoRefresh, 10000);
+            TagWriteActivity.this.autoRefresher.postDelayed(runnableAutoRefresh, 300000);
         }
     };
 }

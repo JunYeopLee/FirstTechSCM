@@ -5,20 +5,12 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.widget.CheckBox;
-import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.junyeop_imaciislab.firsttechscm.R;
-import com.example.junyeop_imaciislab.firsttechscm.adapter.ItemDAOListViewAdapter;
+import com.example.junyeop_imaciislab.firsttechscm.TagReadActivity;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -47,6 +39,9 @@ public class sendTradeStatusUpdateHandler extends JsonHttpResponseHandler {
             dialog.dismiss();
         }
         Toast.makeText(context,"작업 성공",Toast.LENGTH_SHORT).show();
+        if (((Activity)context).getLocalClassName().compareTo("TagReadActivity") == 0) {
+            ((TagReadActivity) context).drawListView();
+        }
     }
 
     @Override

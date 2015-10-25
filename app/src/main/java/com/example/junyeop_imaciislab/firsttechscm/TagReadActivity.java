@@ -47,8 +47,8 @@ public class TagReadActivity extends AppCompatActivity {
         setContentView(R.layout.activity_tag_read);
         ButterKnife.inject(this);
         context = this;
-        //NFCtagID = getNFCtagID();
-        NFCtagID = "04b8d1496b0280"; // For Test
+        NFCtagID = getNFCtagID();
+        //NFCtagID = "04b8d1496b0280"; // For Test
     }
 
     @Override
@@ -56,7 +56,7 @@ public class TagReadActivity extends AppCompatActivity {
         super.onResume();
         NFCtagTextView.setText(NFCtagID);
         autoRefresher = new Handler();
-        autoRefresher.postDelayed(runnableAutoRefresh, 30000);
+        autoRefresher.postDelayed(runnableAutoRefresh, 300000);
         drawListView();
     }
 
@@ -76,7 +76,7 @@ public class TagReadActivity extends AppCompatActivity {
         return getIntent().getExtras().getString("NFCtagID");
     }
 
-    private void drawListView() {
+    public void drawListView() {
         AsyncHttpClient client = new AsyncHttpClient();
         RequestParams requestParams = new RequestParams();
         requestParams.add("hf_tag", NFCtagID);
@@ -174,7 +174,7 @@ public class TagReadActivity extends AppCompatActivity {
         params.add("type", status);
         getCookieFromStore(client);
         Log.d("TagReadActivity", "Query : " + Query + " tradeCode : " + tradeCode + " status : " + status);
-        client.post(Query,params,new sendTradeStatusUpdateHandler(context));
+        client.post(Query, params, new sendTradeStatusUpdateHandler(context));
     }
 
     private void getCookieFromStore(AsyncHttpClient client) {
@@ -196,7 +196,7 @@ public class TagReadActivity extends AppCompatActivity {
         public void run()
         {
             drawListView();
-            TagReadActivity.this.autoRefresher.postDelayed(runnableAutoRefresh, 50000);
+            TagReadActivity.this.autoRefresher.postDelayed(runnableAutoRefresh, 300000);
         }
     };
 }
