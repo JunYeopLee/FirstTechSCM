@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
 
-import com.example.junyeop_imaciislab.firsttechscm.adapter.CheckInventoryListViewAdapter;
 import com.example.junyeop_imaciislab.firsttechscm.util.Constant;
 import com.example.junyeop_imaciislab.firsttechscm.util.checkInventoryDAO;
 import com.example.junyeop_imaciislab.firsttechscm.util.receiveSearchedItemHandler;
@@ -26,6 +25,7 @@ import cz.msebera.android.httpclient.cookie.Cookie;
 
 public class CheckInventoryActivity extends AppCompatActivity {
     private ArrayList<checkInventoryDAO> checkInventoryDAOArrayList;
+    private String NFCtagID;
     @InjectView(R.id.edit_search_inventory)
     public EditText searchEditText;
     @InjectView(R.id.listview_inventory_item)

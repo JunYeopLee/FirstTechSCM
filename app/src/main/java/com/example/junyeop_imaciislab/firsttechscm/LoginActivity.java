@@ -50,20 +50,19 @@ public class LoginActivity extends Activity {
             params.add("username",username);
             params.add("password",password);
             client.post(Constant.getQueryLogin(), params, new LoginAsyncHttpResponseHandler());
-        } else {
-            LoginButton = (Button)findViewById(R.id.btn_log_in);
-            LoginButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    username = ((EditText)findViewById(R.id.edit_id)).getText().toString();
-                    password = ((EditText)findViewById(R.id.edit_pw)).getText().toString();
-                    RequestParams params = new RequestParams();
-                    params.add("username",username);
-                    params.add("password",password);
-                    client.post(Constant.getQueryLogin(), params, new LoginAsyncHttpResponseHandler());
-                }
-            });
         }
+        LoginButton = (Button) findViewById(R.id.btn_log_in);
+        LoginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                username = ((EditText) findViewById(R.id.edit_id)).getText().toString();
+                password = ((EditText) findViewById(R.id.edit_pw)).getText().toString();
+                RequestParams params = new RequestParams();
+                params.add("username", username);
+                params.add("password", password);
+                client.post(Constant.getQueryLogin(), params, new LoginAsyncHttpResponseHandler());
+            }
+        });
     }
 
     /**

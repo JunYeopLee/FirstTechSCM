@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.TextView;
 
 import com.example.junyeop_imaciislab.firsttechscm.util.Constant;
 import com.loopj.android.http.AsyncHttpClient;
@@ -27,7 +26,6 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences LoginSharedPreferences;
     private SharedPreferences.Editor LoginSharedPreferencesEditor;
 
-    private TextView UserIdtxt;
     private ImageButton TagReadButton;
     private ImageButton TagWriteButton;
     private ImageButton TagHistoryButton;
@@ -42,9 +40,7 @@ public class MainActivity extends AppCompatActivity {
         LoginSharedPreferences = getSharedPreferences("login",MODE_PRIVATE);
         Constant.setUserName(LoginSharedPreferences.getString("username", ""));
         Constant.setSqluserTableName(Constant.getUserName()+Constant.getSqlDefaultTableName());
-        //UserIdtxt = (TextView)findViewById(R.id.txt_userid);
-        //UserIdtxt.setText("USER ID : " + LoginSharedPreferences.getString("username",""));
-        
+
         TagReadButton = (ImageButton)findViewById(R.id.btn_tag_read);
         TagWriteButton = (ImageButton)findViewById(R.id.btn_tag_write);
         TagHistoryButton = (ImageButton)findViewById(R.id.btn_tag_history);

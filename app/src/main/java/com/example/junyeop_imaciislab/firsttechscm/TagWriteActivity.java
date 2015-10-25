@@ -12,10 +12,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.junyeop_imaciislab.firsttechscm.util.Constant;
+import com.example.junyeop_imaciislab.firsttechscm.util.itemDAO;
 import com.example.junyeop_imaciislab.firsttechscm.util.receiveTradeInformationHandler;
+import com.example.junyeop_imaciislab.firsttechscm.util.sendCreateTagsTradeHandler;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.PersistentCookieStore;
 import com.loopj.android.http.RequestParams;
+
+import java.util.ArrayList;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -27,6 +31,8 @@ public class TagWriteActivity extends AppCompatActivity {
     private String NFCtagID;
     private Context context;
     private Handler autoRefresher;
+    private receiveTradeInformationHandler receiveTradeInformationHandlerObject;
+    private ArrayList<itemDAO> itemDAOArrayList;
 
     @InjectView(R.id.ckbox_allcheck)
     public CheckBox allCheckBox;
@@ -69,23 +75,15 @@ public class TagWriteActivity extends AppCompatActivity {
         return getIntent().getExtras().getString("NFCtagID");
     }
 
-    private void drawListView() {
+    public void drawListView() {
         AsyncHttpClient client = new AsyncHttpClient();
         RequestParams requestParams = new RequestParams();
         requestParams.add("hf_tag", NFCtagID);
         // Set Cookie from store(JSESSIONID)
-        CookieStore cookieStore = new PersistentCookieStore(context);
-        client.setCookieStore(cookieStore);
-        for (Cookie c : cookieStore.getCookies()) {
-            String cookieName = c.getName();
-            String cookieValue = c.getValue();
-            if(cookieName.compareTo("JSESSIONID")==0) {
-                client.addHeader("Cookie",cookieName+"="+cookieValue);
-                break;
-            }
-        }
+        getCookieFromStore(client);
+        receiveTradeInformationHandlerObject = new receiveTradeInformationHandler(this);
         // Execute query for tag information and getItemDAOArrayList from server
-        client.get(Constant.getQueryTagsTrade(), requestParams, new receiveTradeInformationHandler(this));
+        client.get(Constant.getQueryTagsTrade(), requestParams, receiveTradeInformationHandlerObject);
     }
 
     @OnClick(R.id.btn_refresh)
@@ -97,6 +95,7 @@ public class TagWriteActivity extends AppCompatActivity {
     public void callCheckInventory() {
         Intent intent = new Intent(TagWriteActivity.this, CheckInventoryActivity.class);
         intent.putExtra("activityFrom", "TagWriteActivity");
+        intent.putExtra("NFCtagID",NFCtagID);
         startActivity(intent);
     }
 
@@ -110,6 +109,23 @@ public class TagWriteActivity extends AppCompatActivity {
             public void onClick(DialogInterface arg0, int arg1) {
                 if (dialog != null && dialog.isShowing())
                     dialog.dismiss();
+                itemDAOArrayList = receiveTradeInformationHandlerObject.getItemDAOArrayList();
+                itemDAO itemDAOObject;
+                String tradeCode = "";
+                for (int i = 0; i < itemDAOArrayList.size(); i++) {
+                    itemDAOObject = itemDAOArrayList.get(i);
+                    if (!itemDAOObject.getIsSelected()) {
+                        tradeCode += itemDAOObject.getTradeCode();
+                        tradeCode += ", ";
+                    }
+                }
+                tradeCode = tradeCode.substring(0, tradeCode.lastIndexOf(","));
+                AsyncHttpClient client = new AsyncHttpClient();
+                RequestParams requestParams = new RequestParams();
+                requestParams.add("tags_code", NFCtagID);
+                requestParams.add("trade_code",tradeCode);
+                getCookieFromStore(client);
+                client.get(Constant.getQueryTagsTrade(), requestParams, new sendCreateTagsTradeHandler(context));
             }
         });
 
@@ -121,6 +137,20 @@ public class TagWriteActivity extends AppCompatActivity {
             }
         });
         ab.show();
+    }
+
+    private void getCookieFromStore(AsyncHttpClient client) {
+        // Get Cookie from store(JSESSIONID)
+        CookieStore cookieStore = new PersistentCookieStore(context);
+        client.setCookieStore(cookieStore);
+        for (Cookie c : cookieStore.getCookies()) {
+            String cookieName = c.getName();
+            String cookieValue = c.getValue();
+            if(cookieName.compareTo("JSESSIONID")==0) {
+                client.addHeader("Cookie",cookieName+"="+cookieValue);
+                break;
+            }
+        }
     }
 
     private final Runnable runnableAutoRefresh = new Runnable()

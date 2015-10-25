@@ -7,13 +7,17 @@ import java.util.HashMap;
  */
 public class Constant {
     /**
+     *
      * User private information, Non final, set on MainActivity
+     *
      * */
     private static String userName="";
     private static String sqluserTableName="";
 
     /**
+     *
      * Application constant information, NO SETTER, ONLY GETTER
+     *
      * */
     private static final String serverURL = "http://166.104.142.190:50000/ftscm/";
     private static final String queryTagsTrade = serverURL + "tags_trade";
@@ -65,8 +69,16 @@ public class Constant {
                                                 "key INTEGER PRIMARY KEY AUTOINCREMENT, " +
                                                 "NFCtagID TEXT, " +
                                                 "tagTime TEXT," +
-                                                "summary TEXT);";
-    private static final String sqlSelectAll = "SELECT * FROM " + sqlDefaultTableName;
+                                                "summary TEXT);";  // MUST be used after replace sqlDefaultTableName to sqluserTableName
+    private static final String sqlSelectAll = "SELECT * FROM " + sqlDefaultTableName; // MUST be used after replace sqlDefaultTableName to sqluserTableName
+
+    private static final String sqlInventoryDBName = "Inventory";
+    private static final String sqlInventoryTableName = "INVENTORY_TB";
+    private static final String sqlCreateInventoryTable = "CREATE TABLE if not exists "+sqlInventoryTableName+"(" +
+            "key INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            "ItemCode TEXT, " +
+            "ItemName TEXT," +
+            "summary TEXT);";
 
     private static final String searchedItemCode = "CODE";
     private static final String searchedItemName = "NAME";
@@ -74,13 +86,6 @@ public class Constant {
     private static final String searchedItemUnit ="UNIT";
     private static final String searchedItemAmount ="AMOUNT";
 
-    private static final String sqlInventoryDBName = "Inventory";
-    private static final String sqlInventoryTableName = "INVENTORY_TB";
-    private static final String sqlCreateInventoryTable = "CREATE TABLE if not exists "+sqlInventoryTableName+"(" +
-                                                "key INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                                                "ItemCode TEXT, " +
-                                                "ItemName TEXT," +
-                                                "summary TEXT);";
 
     private static final HashMap<String,String> enumToStatus = new HashMap<String,String>() {
         {

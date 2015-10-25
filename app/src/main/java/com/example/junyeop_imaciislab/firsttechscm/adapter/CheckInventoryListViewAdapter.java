@@ -22,11 +22,13 @@ public class CheckInventoryListViewAdapter   extends ArrayAdapter<checkInventory
     private final Activity context;
     private ArrayList<checkInventoryDAO> checkInventoryDAOArrayList;
     private String activityFrom;
+    private String NFCtagID;
     public CheckInventoryListViewAdapter(Activity context, ArrayList<checkInventoryDAO> checkInventoryDAOArrayList, Intent intent) {
         super(context, R.layout.item_check_inventory_list, checkInventoryDAOArrayList);
         this.context = context;
         this.checkInventoryDAOArrayList = checkInventoryDAOArrayList;
         activityFrom = intent.getExtras().getString("activityFrom");
+        NFCtagID = intent.getExtras().getString("NFCtagID");
     }
 
     @Override
@@ -53,6 +55,7 @@ public class CheckInventoryListViewAdapter   extends ArrayAdapter<checkInventory
             public void onClick(View v) {
                 Intent intent = new Intent(context, InventoryDetailActivity.class);
                 intent.putExtra("activityFrom",activityFrom);
+                intent.putExtra("NFCtagID",NFCtagID);
                 intent.putExtra("checkInventoryDAO",checkInventoryDAOObject);
                 context.startActivity(intent);
             }
