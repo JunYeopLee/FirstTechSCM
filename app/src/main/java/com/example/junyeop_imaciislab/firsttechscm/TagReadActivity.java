@@ -47,8 +47,8 @@ public class TagReadActivity extends AppCompatActivity {
         setContentView(R.layout.activity_tag_read);
         ButterKnife.inject(this);
         context = this;
-        NFCtagID = getNFCtagID();
-        //NFCtagID = "04b8d1496b0280"; // For Test
+        //NFCtagID = getNFCtagID();
+        NFCtagID = "04b8d1496b0280"; // For Test
     }
 
     @Override
