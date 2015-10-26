@@ -59,6 +59,7 @@ public class CheckInventoryActivity extends AppCompatActivity {
             }).show();
             return;
         }
+
         AsyncHttpClient client = new AsyncHttpClient();
         RequestParams requestParams = new RequestParams();
         requestParams.add("item_name", searchEditText.getText().toString());
