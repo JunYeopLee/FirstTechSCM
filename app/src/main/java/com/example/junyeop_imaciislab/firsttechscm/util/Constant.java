@@ -30,7 +30,7 @@ public class Constant {
     private static final String querySearchItem = serverURL+"/item";
 
     private static final String serverItemName = "ITEM_NAME";
-    private static final String serverItemStatus = "TYPE";
+    private static final String serverItemStatus = "STATUS";
     private static final String serverCategory = "NAME";
     private static final String serverExpiryDate = "VALID_TIME";
     private static final String serverStandard = "ITEM_COUNT";
@@ -82,7 +82,8 @@ public class Constant {
 
     private static final String searchedItemCode = "CODE";
     private static final String searchedItemName = "NAME";
-    private static final String searchedItemCategory = "SUB_CATEGORY_CODE";
+    private static final String searchedItemCategory = "CATEGORY_NAME";
+    private static final String searchedItemSubCategory = "SUB_CATEGORY_NAME";
     private static final String searchedItemUnit ="UNIT";
     private static final String searchedItemAmount ="AMOUNT";
 
@@ -282,6 +283,10 @@ public class Constant {
 
     public static String getSearchedItemCategory() {
         return searchedItemCategory;
+    }
+
+    public static String getSearchedItemSubCategory() {
+        return searchedItemSubCategory;
     }
 
     public static String getSearchedItemUnit() {
