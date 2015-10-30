@@ -29,6 +29,7 @@ import cz.msebera.android.httpclient.cookie.Cookie;
 
 public class TagWriteActivity extends AppCompatActivity {
     private String NFCtagID;
+    private Long taggingTime;
     private Context context;
     private Handler autoRefresher;
     private receiveTradeInformationHandler receiveTradeInformationHandlerObject;
@@ -49,7 +50,9 @@ public class TagWriteActivity extends AppCompatActivity {
         context = this;
         //NFCtagID = getNFCtagID();
         NFCtagID = "04b8d1496b0280"; // For Test
+        taggingTime = getIntent().getExtras().getLong("TaggingTime");
     }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -86,6 +89,22 @@ public class TagWriteActivity extends AppCompatActivity {
         client.get(Constant.getQueryTagsTrade(), requestParams, receiveTradeInformationHandlerObject);
     }
 
+    private boolean checkIsItValidTime() {
+        if(System.currentTimeMillis()-taggingTime<3600000) {
+            return true;
+        } else {
+            AlertDialog.Builder ab = new AlertDialog.Builder(this);
+            ab.setMessage("태그 인식 후 1시간 이내에만 상태를 변경할 수 있습니다").setCancelable(true).setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    if (dialog != null)
+                        dialog.dismiss();
+                }
+            }).show();
+            return false;
+        }
+    }
+
     @OnClick(R.id.btn_refresh)
     public void refreshView() {
         drawListView();
@@ -93,6 +112,7 @@ public class TagWriteActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_add_item)
     public void callCheckInventory() {
+        if(checkIsItValidTime()==false) {return;}
         Intent intent = new Intent(TagWriteActivity.this, CheckInventoryActivity.class);
         intent.putExtra("activityFrom", "TagWriteActivity");
         intent.putExtra("NFCtagID",NFCtagID);
@@ -101,6 +121,7 @@ public class TagWriteActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_del_selected)
     public void onClickDelSelected() {
+        if(checkIsItValidTime()==false) {return;}
         AlertDialog.Builder ab = new AlertDialog.Builder(this);
         final AlertDialog dialog = null;
         ab.setMessage("선택 하신 상품들을 삭제 하시겠습니까?");
@@ -111,21 +132,22 @@ public class TagWriteActivity extends AppCompatActivity {
                     dialog.dismiss();
                 itemDAOArrayList = receiveTradeInformationHandlerObject.getItemDAOArrayList();
                 itemDAO itemDAOObject;
-                String tradeCode = "";
+                String tradeCode = "",tagID="";
                 for (int i = 0; i < itemDAOArrayList.size(); i++) {
                     itemDAOObject = itemDAOArrayList.get(i);
                     if (!itemDAOObject.getIsSelected()) {
                         tradeCode += itemDAOObject.getTradeCode();
                         tradeCode += ", ";
+                        tagID = itemDAOObject.getTagID();
                     }
                 }
                 tradeCode = tradeCode.substring(0, tradeCode.lastIndexOf(","));
                 AsyncHttpClient client = new AsyncHttpClient();
                 RequestParams requestParams = new RequestParams();
-                requestParams.add("tags_code", NFCtagID);
+                requestParams.add("tags_code", tagID);
                 requestParams.add("trade_code",tradeCode);
                 getCookieFromStore(client);
-                client.get(Constant.getQueryTagsTrade(), requestParams, new sendCreateTagsTradeHandler(context));
+                client.post(Constant.getQueryTagsTrade(), requestParams, new sendCreateTagsTradeHandler(context));
             }
         });
 

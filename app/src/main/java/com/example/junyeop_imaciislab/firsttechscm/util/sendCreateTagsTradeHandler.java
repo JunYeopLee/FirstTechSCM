@@ -39,7 +39,7 @@ public class sendCreateTagsTradeHandler extends JsonHttpResponseHandler {
             dialog.dismiss();
         }
         Toast.makeText(context, "작업 성공", Toast.LENGTH_SHORT).show();
-        if (((Activity)context).getLocalClassName().compareTo("InventoryDetailActivity") == 0) {
+        if (((Activity)context).getLocalClassName().compareTo("TagWriteActivity") == 0) {
             ((TagWriteActivity) context).drawListView();
         }
     }

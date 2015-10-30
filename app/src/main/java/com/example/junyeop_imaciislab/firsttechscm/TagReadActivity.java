@@ -29,6 +29,7 @@ import cz.msebera.android.httpclient.cookie.Cookie;
 
 public class TagReadActivity extends AppCompatActivity {
     private String NFCtagID;
+    private Long taggingTime;
     private Handler autoRefresher;
     private Context context;
     private receiveTradeInformationHandler receiveTradeInformationHandlerObject;
@@ -47,8 +48,9 @@ public class TagReadActivity extends AppCompatActivity {
         setContentView(R.layout.activity_tag_read);
         ButterKnife.inject(this);
         context = this;
-        //NFCtagID = getNFCtagID();
-        NFCtagID = "04b8d1496b0280"; // For Test
+        NFCtagID = getNFCtagID();
+        taggingTime = getIntent().getExtras().getLong("TaggingTime");
+        //NFCtagID = "04b8d1496b0280"; // For Test
     }
 
     @Override
@@ -86,6 +88,22 @@ public class TagReadActivity extends AppCompatActivity {
         client.get(Constant.getQueryTagsTrade(), requestParams, receiveTradeInformationHandlerObject);
     }
 
+    public boolean checkIsItValidTime() {
+        if(System.currentTimeMillis()-taggingTime<3600000) {
+            return true;
+        } else {
+            AlertDialog.Builder ab = new AlertDialog.Builder(this);
+            ab.setMessage("태그 인식 후 1시간 이내에만 상태를 변경할 수 있습니다").setCancelable(true).setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    if (dialog != null)
+                        dialog.dismiss();
+                }
+            }).show();
+            return false;
+        }
+    }
+
     @OnClick(R.id.btn_refresh)
     public void refreshView() {
         drawListView();
@@ -93,6 +111,7 @@ public class TagReadActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_get_stock)
     public void onClickGetStock() {
+        if(checkIsItValidTime()==false) {return;}
         AlertDialog.Builder ab = new AlertDialog.Builder(this);
         final AlertDialog dialog = null;
         ab.setMessage("선택 하신 상품들을 입고 하시겠습니까?");
@@ -131,6 +150,7 @@ public class TagReadActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_get_release)
     public void onClickGetRelease() {
+        if(checkIsItValidTime()==false) {return;}
         AlertDialog.Builder ab = new AlertDialog.Builder(this);
         final AlertDialog dialog = null;
         ab.setMessage("선택 하신 상품들을 출고 하시겠습니까?");
@@ -171,7 +191,7 @@ public class TagReadActivity extends AppCompatActivity {
         AsyncHttpClient client = new AsyncHttpClient();
         String Query = Constant.getQueryTradeStatusUpdate().replace(Constant.getQueryTradeStatusUpdateParameter(), tradeCode);
         RequestParams params = new RequestParams();
-        params.add("type", status);
+        params.add("status", status);
         getCookieFromStore(client);
         Log.d("TagReadActivity", "Query : " + Query + " tradeCode : " + tradeCode + " status : " + status);
         client.post(Query, params, new sendTradeStatusUpdateHandler(context));

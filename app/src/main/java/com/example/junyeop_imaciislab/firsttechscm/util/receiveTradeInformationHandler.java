@@ -140,6 +140,7 @@ public class receiveTradeInformationHandler extends JsonHttpResponseHandler {
         itemDAOObject.setCustomer(jsonObject.getString(Constant.getServerCustomer()));
         itemDAOObject.setTradeCode(jsonObject.getString(Constant.getServerTradeCode()));
         itemDAOObject.setItemCode(jsonObject.getString(Constant.getServerItemCodeInTag()));
+        itemDAOObject.setTagID(jsonObject.getString(Constant.getServerTagID()));
         itemDAOObject.setIsSelected(false);
         return itemDAOObject;
     }

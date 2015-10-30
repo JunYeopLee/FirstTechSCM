@@ -82,7 +82,8 @@ public class InventoryDetailActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         invisibleSomeComponent();
-        if(NFCtagID.compareTo("")!=0) getprevItemDAOArrayList();
+        if(NFCtagID.compareTo("")!=0)
+            getprevItemDAOArrayList();
         drawListView();
 
         detailItemListView = (ListView)findViewById(R.id.listview_detail_item);
@@ -142,12 +143,13 @@ public class InventoryDetailActivity extends AppCompatActivity {
                 searchedItemDAOArrayList = searchedItemDAOArrayListHandler.getInventoryDetailList();
                 prevItemDAOArrayList = prevItemDAOArrayListHandler.getItemDAOArrayList();
 
-                String tradeCode = "";
+                String tradeCode = "",tagID;
                 itemDAO itemDAOObject;
                 for (int i = 0; i < prevItemDAOArrayList.size(); i++) {
                     itemDAOObject = prevItemDAOArrayList.get(i);
                     tradeCode += itemDAOObject.getTradeCode();
                     tradeCode += ", ";
+                    tagID = itemDAOObject.getTagID();
                 }
                 if(prevItemDAOArrayList.size()!=0) tradeCode = tradeCode.substring(0, tradeCode.lastIndexOf(","));
 
@@ -168,7 +170,7 @@ public class InventoryDetailActivity extends AppCompatActivity {
                 requestParams.add("tags_code", NFCtagID);
                 requestParams.add("trade_code",tradeCode);
                 getCookieFromStore(client);
-                client.get(Constant.getQueryTagsTrade(), requestParams, new sendCreateTagsTradeHandler(context));
+                client.post(Constant.getQueryTagsTrade(), requestParams, new sendCreateTagsTradeHandler(context));
             }
         });
 

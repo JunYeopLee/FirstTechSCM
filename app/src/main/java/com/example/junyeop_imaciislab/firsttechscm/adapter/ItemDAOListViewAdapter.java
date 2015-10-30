@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.example.junyeop_imaciislab.firsttechscm.ItemHistoryActivity;
 import com.example.junyeop_imaciislab.firsttechscm.R;
 import com.example.junyeop_imaciislab.firsttechscm.StatusSelectDialog;
+import com.example.junyeop_imaciislab.firsttechscm.TagReadActivity;
 import com.example.junyeop_imaciislab.firsttechscm.util.Constant;
 import com.example.junyeop_imaciislab.firsttechscm.util.itemDAO;
 
@@ -98,6 +99,7 @@ public class ItemDAOListViewAdapter extends ArrayAdapter<itemDAO> {
             itemStatusButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if(((TagReadActivity)context).checkIsItValidTime()==false) {return;}
                     StatusSelectDialog statusSelectDialog = new StatusSelectDialog(context, itemDAOObject.getItemStatus(), itemDAOObject.getTradeCode());
                     statusSelectDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                     statusSelectDialog.show();

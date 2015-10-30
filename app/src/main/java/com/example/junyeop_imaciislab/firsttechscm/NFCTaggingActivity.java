@@ -102,20 +102,23 @@ public class NFCTaggingActivity extends Activity {
             StringBuilder sb = new StringBuilder();
             byte[] id = ((Tag)tag).getId();
             Toast.makeText(this, sb.append("Tag ID (HEX): ").append(getHex(id)).toString(), Toast.LENGTH_LONG).show();
+            Long taggingTime = System.currentTimeMillis();
             tagHistoryDB.execSQL("insert into " + Constant.getSqluserTableName() + " values(null, '" +
                     getHex(id) + "', '" +
-                    new SimpleDateFormat("yy-MM-dd  hh:mm:ss").format(new Date(System.currentTimeMillis())) + "', '" +
+                    new SimpleDateFormat("yy-MM-dd  hh:mm:ss").format(new Date(taggingTime)) + "', '" +
                     "고등어(소금안친거)외 4종" +
                     "');");
 
             if(activityToGo.compareTo("write")==0) {
                 Intent writeIntent = new Intent(NFCTaggingActivity.this, com.example.junyeop_imaciislab.firsttechscm.TagWriteActivity.class);
                 writeIntent.putExtra("NFCtagID", getHex(id));
+                writeIntent.putExtra("TaggingTime",taggingTime);
                 startActivity(writeIntent);
                 finish();
             } else {
                 Intent readIntent = new Intent(NFCTaggingActivity.this, com.example.junyeop_imaciislab.firsttechscm.TagReadActivity.class);
                 readIntent.putExtra("NFCtagID", getHex(id));
+                readIntent.putExtra("TaggingTime",taggingTime);
                 startActivity(readIntent);
                 finish();
             }

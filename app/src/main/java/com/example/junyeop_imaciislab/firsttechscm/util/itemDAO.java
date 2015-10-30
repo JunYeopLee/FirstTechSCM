@@ -17,6 +17,7 @@ public class itemDAO {
     private String tradeCode;
     private String itemCode;
     private Boolean isSelected;
+    private String tagID;
 
     public String getItemName() {
         return itemName;
@@ -122,4 +123,11 @@ public class itemDAO {
         this.isSelected = isSelected;
     }
 
+    public String getTagID() {
+        return tagID;
+    }
+
+    public void setTagID(String tagID) {
+        this.tagID = tagID;
+    }
 }

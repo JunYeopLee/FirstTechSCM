@@ -78,7 +78,7 @@ public class StatusSelectDialog extends Dialog {
         AsyncHttpClient client = new AsyncHttpClient();
         String Query = Constant.getQueryTradeStatusUpdate().replace(Constant.getQueryTradeStatusUpdateParameter(), tradeCode);
         RequestParams params = new RequestParams();
-        params.add("type", status);
+        params.add("status", status);
         getCookieFromStore(client);
         Log.d("StatusSelectDialog", "Query : " + Query + " tradeCode : " + tradeCode + " status : " + status);
         client.post(Query, params, new sendTradeStatusUpdateHandler(context));

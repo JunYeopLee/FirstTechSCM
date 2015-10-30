@@ -13,7 +13,6 @@ public class Constant {
      * */
     private static String userName="";
     private static String sqluserTableName="";
-
     /**
      *
      * Application constant information, NO SETTER, ONLY GETTER
@@ -41,6 +40,7 @@ public class Constant {
     private static final String serverCustomer = "PARTNER_NAME";
     private static final String serverTradeCode = "TRADE_CODE";
     private static final String serverItemCodeInTag = "ITEM_CODE";
+    private static final String serverTagID = "TAGS_CODE";
     private static final String serverTagModifiedTime =  "tag_modified_time";
 
     private static final String serverItemCode = "CODE";
@@ -183,6 +183,10 @@ public class Constant {
 
     public static String getServerItemCodeInTag() {
         return serverItemCodeInTag;
+    }
+
+    public static String getServerTagID() {
+        return serverTagID;
     }
 
     public static String getServerTagModifiedTime() {
@@ -328,4 +332,5 @@ public class Constant {
     public static void setSqluserTableName(String sqluserTableName) {
         Constant.sqluserTableName = sqluserTableName;
     }
+
 }
