@@ -13,7 +13,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.junyeop_imaciislab.firsttechscm.adapter.ItemDAOListViewAdapter;
 import com.example.junyeop_imaciislab.firsttechscm.util.Constant;
 import com.example.junyeop_imaciislab.firsttechscm.util.checkInventoryDAO;
 import com.example.junyeop_imaciislab.firsttechscm.util.itemDAO;
@@ -82,21 +81,9 @@ public class InventoryDetailActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         invisibleSomeComponent();
-        if(NFCtagID.compareTo("")!=0)
+        if(NFCtagID!=null && NFCtagID.compareTo("")!=0)
             getprevItemDAOArrayList();
         drawListView();
-
-        detailItemListView = (ListView)findViewById(R.id.listview_detail_item);
-        searchedItemDAOArrayList = new ArrayList<>();
-        itemDAO itemDAOObject = new itemDAO();
-        itemDAOObject.setItemStatus("n"); itemDAOObject.setExpirydate("11111111"); itemDAOObject.setIsSelected(false);
-        searchedItemDAOArrayList.add(itemDAOObject);
-        searchedItemDAOArrayList.add(itemDAOObject);
-        searchedItemDAOArrayList.add(itemDAOObject);
-        searchedItemDAOArrayList.add(itemDAOObject);
-        searchedItemDAOArrayList.add(itemDAOObject);
-        ItemDAOListViewAdapter itemDAOListViewAdapter = new ItemDAOListViewAdapter(this,searchedItemDAOArrayList,activityFrom);
-        detailItemListView.setAdapter(itemDAOListViewAdapter);
 
     }
     private void invisibleSomeComponent() {  // set invisible some component when activity came from main activity directly.
@@ -111,7 +98,7 @@ public class InventoryDetailActivity extends AppCompatActivity {
         }
     }
 
-    public void drawListView() { // GET searched item dao list that is matced to item code, and draw list
+    public void drawListView() { // GET searched item dao list that is matched to item code, and draw list
         AsyncHttpClient client = new AsyncHttpClient();
         RequestParams requestParams = new RequestParams();
         requestParams.add("item_code", checkInventoryDAOObject.getItemCode());

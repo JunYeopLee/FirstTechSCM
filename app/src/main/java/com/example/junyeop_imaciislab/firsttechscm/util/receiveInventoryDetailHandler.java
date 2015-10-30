@@ -5,14 +5,19 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.widget.Toast;
+import android.widget.ListView;
 
-import com.example.junyeop_imaciislab.firsttechscm.TagReadActivity;
+import com.example.junyeop_imaciislab.firsttechscm.R;
+import com.example.junyeop_imaciislab.firsttechscm.adapter.ItemDAOListViewAdapter;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -23,9 +28,11 @@ public class receiveInventoryDetailHandler extends JsonHttpResponseHandler {
     private ProgressDialog dialog;
     private Context context;
     private ArrayList<itemDAO> inventoryDetailList = new ArrayList<>();
+    private ListView inventoryDetailListView;
 
     public receiveInventoryDetailHandler(Context context) {
         this.context = context;
+        inventoryDetailListView = (ListView)((Activity) context).findViewById(R.id.listview_detail_item);
     }
     @Override
     public void onStart() {
@@ -36,13 +43,36 @@ public class receiveInventoryDetailHandler extends JsonHttpResponseHandler {
     }
     @Override
     public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-        // called when response HTTP status is "200 OK"
-        if(dialog != null && dialog.isShowing()){
-            dialog.dismiss();
-        }
-        Toast.makeText(context, "작업 성공", Toast.LENGTH_SHORT).show();
-        if (((Activity)context).getLocalClassName().compareTo("TagReadActivity") == 0) {
-            ((TagReadActivity) context).drawListView();
+        try {
+            if(response.getBoolean("success")) {
+                inventoryDetailList = new ArrayList<>();
+                JSONArray jsonArray = response.getJSONObject("result").getJSONArray("data");
+                for( int i  = 0 ; i < jsonArray.length() ; i++ ) { // get trade information
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                    itemDAO itemDAOObject = convertJsonObjectToitemDAO(jsonObject);
+                    inventoryDetailList.add(itemDAOObject);
+                }
+                Collections.sort(inventoryDetailList, new Comparator<itemDAO>() {
+                    @Override
+                    public int compare(itemDAO p1, itemDAO p2) {
+                        return p1.getItemName().compareTo(p2.getItemName());
+                    }
+                });
+                if (((Activity)context).getLocalClassName().compareTo("InventoryDetailActivity") == 0 ) {
+                    ItemDAOListViewAdapter itemDAOListViewAdapter = new ItemDAOListViewAdapter(((Activity)context),inventoryDetailList);
+                    inventoryDetailListView = (ListView)((Activity) context).findViewById(R.id.listview_tagitem);
+                    inventoryDetailListView.setAdapter(itemDAOListViewAdapter);
+                    inventoryDetailListView.invalidate();
+                }
+                if(dialog != null && dialog.isShowing()){
+                    dialog.dismiss();
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+            if(dialog != null && dialog.isShowing()){
+                dialog.dismiss();
+            }
         }
     }
 
@@ -63,5 +93,24 @@ public class receiveInventoryDetailHandler extends JsonHttpResponseHandler {
 
     public ArrayList<itemDAO> getInventoryDetailList() {
         return inventoryDetailList;
+    }
+
+    private itemDAO convertJsonObjectToitemDAO(JSONObject jsonObject) throws JSONException {
+        itemDAO itemDAOObject = new itemDAO();
+        itemDAOObject.setItemName(jsonObject.getString(Constant.getServerItemName()));
+        itemDAOObject.setItemStatus(jsonObject.getString(Constant.getServerItemStatus()));
+        itemDAOObject.setCategory(jsonObject.getString(Constant.getServerCategory()));
+        itemDAOObject.setExpirydate(jsonObject.getString(Constant.getServerExpiryDate()));
+        itemDAOObject.setStandard(jsonObject.getString(Constant.getServerStandard()));
+        itemDAOObject.setUnit(jsonObject.getString(Constant.getServerUnit()));
+        itemDAOObject.setAmount(jsonObject.getString(Constant.getServerAmount()));
+        itemDAOObject.setPrice(jsonObject.getString(Constant.getServerPrice()));
+        itemDAOObject.setLocation(jsonObject.getString(Constant.getServerLocation()));
+        itemDAOObject.setCustomer(jsonObject.getString(Constant.getServerCustomer()));
+        itemDAOObject.setTradeCode(jsonObject.getString(Constant.getServerTradeCode()));
+        itemDAOObject.setItemCode(jsonObject.getString(Constant.getServerItemCodeInTag()));
+        itemDAOObject.setTagID(jsonObject.getString(Constant.getServerTagID()));
+        itemDAOObject.setIsSelected(false);
+        return itemDAOObject;
     }
 }

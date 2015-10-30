@@ -105,7 +105,7 @@ public class NFCTaggingActivity extends Activity {
             Long taggingTime = System.currentTimeMillis();
             tagHistoryDB.execSQL("insert into " + Constant.getSqluserTableName() + " values(null, '" +
                     getHex(id) + "', '" +
-                    new SimpleDateFormat("yy-MM-dd  hh:mm:ss").format(new Date(taggingTime)) + "', '" +
+                    new SimpleDateFormat("yy-MM-dd  HH:mm:ss").format(new Date(taggingTime)) + "', '" +
                     "고등어(소금안친거)외 4종" +
                     "');");
 

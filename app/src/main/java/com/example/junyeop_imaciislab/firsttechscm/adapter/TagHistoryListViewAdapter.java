@@ -15,7 +15,10 @@ import com.example.junyeop_imaciislab.firsttechscm.R;
 import com.example.junyeop_imaciislab.firsttechscm.TagReadActivity;
 import com.example.junyeop_imaciislab.firsttechscm.util.tagHistoryDAO;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by LeeJunYeop on 2015-10-11.
@@ -42,7 +45,7 @@ public class TagHistoryListViewAdapter  extends ArrayAdapter<tagHistoryDAO> {
         TextView tagIDTextView = (TextView)rowView.findViewById(R.id.txt_tagid_taghistory);
         TextView createdTimeTextView = (TextView)rowView.findViewById(R.id.txt_created_time_taghistory);
         TextView summaryTextView = (TextView)rowView.findViewById(R.id.txt_summary_taghistory);
-        CheckBox tagHistoryCkbox = (CheckBox)rowView.findViewById(R.id.ckbox_taghistory);
+        final CheckBox tagHistoryCkbox = (CheckBox)rowView.findViewById(R.id.ckbox_taghistory);
 
         final tagHistoryDAO tagHistoryDAOObject = tagHistoryDAOArrayList.get(position);
 
@@ -55,9 +58,19 @@ public class TagHistoryListViewAdapter  extends ArrayAdapter<tagHistoryDAO> {
             @Override
             public void onClick(View v) {
                 String NFCtagID = tagHistoryDAOObject.getTagID();
+                String taggingTime = tagHistoryDAOObject.getCreatedTime();
+                Long taggingTimeLong= (long)0;
+                try {
+                    SimpleDateFormat f = new SimpleDateFormat("yy-MM-dd  HH:mm:ss");
+                    Date d = f.parse(taggingTime);
+                    taggingTimeLong = d.getTime();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
                 Intent readIntent = new Intent(context, TagReadActivity.class);
                 readIntent.putExtra("NFCtagID", NFCtagID);
-                //readIntent.putExtra("NFCtagID", "T1510111");
+                readIntent.putExtra("TaggingTime",taggingTimeLong);
                 context.startActivity(readIntent);
             }
         });
