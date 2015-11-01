@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.example.junyeop_imaciislab.firsttechscm.util.Constant;
 import com.example.junyeop_imaciislab.firsttechscm.util.checkInventoryDAO;
 import com.example.junyeop_imaciislab.firsttechscm.util.itemDAO;
+import com.example.junyeop_imaciislab.firsttechscm.util.receiveAllTradeHandler;
 import com.example.junyeop_imaciislab.firsttechscm.util.receiveInventoryDetailHandler;
 import com.example.junyeop_imaciislab.firsttechscm.util.receiveTradeInformationHandler;
 import com.example.junyeop_imaciislab.firsttechscm.util.sendCreateTagsTradeHandler;
@@ -43,6 +44,7 @@ public class InventoryDetailActivity extends AppCompatActivity {
 
     private ArrayList<itemDAO> searchedItemDAOArrayList = new ArrayList<>();
     private ArrayList<itemDAO> prevItemDAOArrayList = new ArrayList<>();
+    private ArrayList<itemDAO> allTradeList;
 
     @InjectView(R.id.txt_itemname)
     public TextView itemNameTextView;
@@ -61,15 +63,20 @@ public class InventoryDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_inventory_detail);
         ButterKnife.inject(this);
         context = this;
+
         Intent intent = getIntent();
         if(!intent.hasExtra("activityFrom")) {
             // ERROR SHOOTING
         } else {
             activityFrom = intent.getExtras().getString("activityFrom");
         }
+
         NFCtagID = "";
         if(intent.hasExtra("NFCtagID"))
             NFCtagID = intent.getExtras().getString("NFCtagID");
+
+        allTradeList = (ArrayList<itemDAO>)intent.getSerializableExtra("allTradeList");
+
         checkInventoryDAOObject = (checkInventoryDAO)intent.getSerializableExtra("checkInventoryDAO");
         itemNameTextView.setText(checkInventoryDAOObject.getItemName());
         categoryTextView.setText(checkInventoryDAOObject.getCategory());
@@ -100,17 +107,16 @@ public class InventoryDetailActivity extends AppCompatActivity {
 
     public void drawListView() { // GET searched item dao list that is matched to item code, and draw list
         AsyncHttpClient client = new AsyncHttpClient();
-        RequestParams requestParams = new RequestParams();
-        requestParams.add("item_code", checkInventoryDAOObject.getItemCode());
         getCookieFromStore(client);
         searchedItemDAOArrayListHandler = new receiveInventoryDetailHandler(this);
-        client.get(Constant.getQueryTagsTrade(), requestParams, searchedItemDAOArrayListHandler);
+        String query = Constant.getQueryGetItemHistory().replace(Constant.getQueryGetItemHistoryParameter(),checkInventoryDAOObject.getItemCode());
+        client.get(query, searchedItemDAOArrayListHandler);
     }
 
     public void getprevItemDAOArrayList() { // GET prev item DAO list that is already bind to tag
         AsyncHttpClient client = new AsyncHttpClient();
         RequestParams requestParams = new RequestParams();
-        requestParams.add("hf_tags", NFCtagID);
+        requestParams.add("hf_tag", NFCtagID);
         getCookieFromStore(client);
         prevItemDAOArrayListHandler = new receiveTradeInformationHandler(this);
         client.get(Constant.getQueryTagsTrade(), requestParams, prevItemDAOArrayListHandler);
@@ -120,7 +126,7 @@ public class InventoryDetailActivity extends AppCompatActivity {
     public void onClickConfirmButton() {
         AlertDialog.Builder ab = new AlertDialog.Builder(this);
         final AlertDialog dialog = null;
-        ab.setMessage("선택 하신 상품들을 박스 추가 하시겠습니까?");
+        ab.setMessage("선택 하신 상품들을 박스에 추가 하시겠습니까?");
         ab.setPositiveButton("확인", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface arg0, int arg1) {
@@ -130,7 +136,7 @@ public class InventoryDetailActivity extends AppCompatActivity {
                 searchedItemDAOArrayList = searchedItemDAOArrayListHandler.getInventoryDetailList();
                 prevItemDAOArrayList = prevItemDAOArrayListHandler.getItemDAOArrayList();
 
-                String tradeCode = "",tagID;
+                String tradeCode = "", tagID="";
                 itemDAO itemDAOObject;
                 for (int i = 0; i < prevItemDAOArrayList.size(); i++) {
                     itemDAOObject = prevItemDAOArrayList.get(i);
@@ -138,24 +144,23 @@ public class InventoryDetailActivity extends AppCompatActivity {
                     tradeCode += ", ";
                     tagID = itemDAOObject.getTagID();
                 }
-                if(prevItemDAOArrayList.size()!=0) tradeCode = tradeCode.substring(0, tradeCode.lastIndexOf(","));
 
                 boolean added = false;
                 for (int i = 0; i < searchedItemDAOArrayList.size(); i++) {
                     itemDAOObject = searchedItemDAOArrayList.get(i);
-                    if(itemDAOObject.getIsSelected()) {
+                    if (itemDAOObject.getIsSelected()) {
                         tradeCode += itemDAOObject.getTradeCode();
                         tradeCode += ", ";
                         added = true;
                     }
                 }
-                if(added) tradeCode = tradeCode.substring(0, tradeCode.lastIndexOf(","));
+                if (added) tradeCode = tradeCode.substring(0, tradeCode.lastIndexOf(","));
                 else return;
 
                 AsyncHttpClient client = new AsyncHttpClient();
                 RequestParams requestParams = new RequestParams();
-                requestParams.add("tags_code", NFCtagID);
-                requestParams.add("trade_code",tradeCode);
+                requestParams.add("tags_code", tagID);
+                requestParams.add("trade_code", tradeCode);
                 getCookieFromStore(client);
                 client.post(Constant.getQueryTagsTrade(), requestParams, new sendCreateTagsTradeHandler(context));
             }
@@ -169,6 +174,14 @@ public class InventoryDetailActivity extends AppCompatActivity {
             }
         });
         ab.show();
+    }
+
+    public ArrayList<itemDAO> getAllTradeList() {
+        return allTradeList;
+    }
+
+    public checkInventoryDAO getCheckInventoryDAOObject() {
+        return checkInventoryDAOObject;
     }
 
     private void getCookieFromStore(AsyncHttpClient client) {

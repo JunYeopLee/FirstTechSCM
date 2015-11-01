@@ -1,9 +1,11 @@
 package com.example.junyeop_imaciislab.firsttechscm.util;
 
+import java.io.Serializable;
+
 /**
  * Created by junyeop_imaciislab on 2015. 10. 7..
  */
-public class itemDAO {
+public class itemDAO implements Serializable {
     private String itemName;
     private String itemStatus;
     private String category;
@@ -129,5 +131,25 @@ public class itemDAO {
 
     public void setTagID(String tagID) {
         this.tagID = tagID;
+    }
+
+    public itemDAO() {
+    }
+
+    public itemDAO(itemDAO another) {
+        this.itemName = another.itemName;
+        this.itemStatus = another.itemStatus;
+        this.category = another.category;
+        this.expirydate = another.expirydate;
+        this.standard = another.standard;
+        this.unit = another.unit;
+        this.amount = another.amount;
+        this.price = another.price;
+        this.location = another.location;
+        this.customer = another.customer;
+        this.tradeCode = another.tradeCode;
+        this.itemCode = another.itemCode;
+        this.isSelected = another.isSelected;
+        this.tagID = another.tagID;
     }
 }

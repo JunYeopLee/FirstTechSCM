@@ -9,9 +9,11 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.example.junyeop_imaciislab.firsttechscm.CheckInventoryActivity;
 import com.example.junyeop_imaciislab.firsttechscm.InventoryDetailActivity;
 import com.example.junyeop_imaciislab.firsttechscm.R;
 import com.example.junyeop_imaciislab.firsttechscm.util.checkInventoryDAO;
+import com.example.junyeop_imaciislab.firsttechscm.util.itemDAO;
 
 import java.util.ArrayList;
 
@@ -57,6 +59,7 @@ public class CheckInventoryListViewAdapter   extends ArrayAdapter<checkInventory
                 intent.putExtra("activityFrom",activityFrom);
                 intent.putExtra("NFCtagID",NFCtagID);
                 intent.putExtra("checkInventoryDAO",checkInventoryDAOObject);
+                intent.putExtra("allTradeList", ((CheckInventoryActivity) context).getAllTradeList());
                 context.startActivity(intent);
             }
         });

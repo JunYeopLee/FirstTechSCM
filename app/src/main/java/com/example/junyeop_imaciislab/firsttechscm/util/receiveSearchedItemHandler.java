@@ -90,7 +90,8 @@ public class receiveSearchedItemHandler extends JsonHttpResponseHandler {
         checkInventoryDAO.setItemCode(jsonObject.getString(Constant.getSearchedItemCode()));
         checkInventoryDAO.setItemName(jsonObject.getString(Constant.getSearchedItemName()));
         checkInventoryDAO.setCategory(jsonObject.getString(Constant.getSearchedItemCategory()) + ">" + jsonObject.getString(Constant.getSearchedItemSubCategory()));
-        checkInventoryDAO.setAmount(jsonObject.getString(Constant.getSearchedItemAmount()));
+        checkInventoryDAO.setStandard(jsonObject.getString(Constant.getSearchedItemStandard()));
+        //checkInventoryDAO.setAmount(jsonObject.getString(Constant.getSearchedItemAmount()));
         checkInventoryDAO.setUnit(jsonObject.getString(Constant.getSearchedItemUnit()));
         return checkInventoryDAO;
     }

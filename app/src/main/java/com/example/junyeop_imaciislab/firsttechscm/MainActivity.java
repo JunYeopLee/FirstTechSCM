@@ -37,9 +37,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         LoginSharedPreferences = getSharedPreferences("login",MODE_PRIVATE);
         Constant.setUserName(LoginSharedPreferences.getString("username", ""));
         Constant.setSqluserTableName(Constant.getUserName()+Constant.getSqlDefaultTableName());
+        
 
         TagReadButton = (ImageButton)findViewById(R.id.btn_tag_read);
         TagWriteButton = (ImageButton)findViewById(R.id.btn_tag_write);

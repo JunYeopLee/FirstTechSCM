@@ -112,7 +112,7 @@ public class ItemDAOListViewAdapter extends ArrayAdapter<itemDAO> {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, ItemHistoryActivity.class);
-                intent.putExtra("ItemCode",itemDAOObject.getItemCode());
+                intent.putExtra("tradeCode",itemDAOObject.getTradeCode());
                 context.overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out);
                 context.startActivity(intent);
             }

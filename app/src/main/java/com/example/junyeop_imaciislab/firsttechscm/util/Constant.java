@@ -24,6 +24,8 @@ public class Constant {
     private static final String queryLogout = serverURL + "user/logout";
     private static final String queryGetItemHistory = serverURL + "item/{item_code}/history";
     private static final String queryGetItemHistoryParameter = "{item_code}";
+    private static final String queryGetTradeHistory = serverURL + "trade/{trade_code}";
+    private static final String queryGetTradeHistoryParameter = "{trade_code}";
     private static final String queryTradeStatusUpdate = serverURL + "trade/{trade_code}/status";
     private static final String queryTradeStatusUpdateParameter = "{trade_code}";
     private static final String querySearchItem = serverURL+"/item";
@@ -32,20 +34,20 @@ public class Constant {
     private static final String serverItemStatus = "STATUS";
     private static final String serverCategory = "NAME";
     private static final String serverExpiryDate = "VALID_TIME";
-    private static final String serverStandard = "ITEM_COUNT";
+    private static final String serverStandard = "AMOUNT";
     private static final String serverUnit = "UNIT";
-    private static final String serverAmount = "AMOUNT";
+    private static final String serverAmount = "ITEM_COUNT";
     private static final String serverPrice = "COST";
     private static final String serverLocation = "LOCATION";
     private static final String serverCustomer = "PARTNER_NAME";
     private static final String serverTradeCode = "TRADE_CODE";
     private static final String serverItemCodeInTag = "ITEM_CODE";
-    private static final String serverTagID = "TAGS_CODE";
+    private static final String serverTagID = "CODE";
     private static final String serverTagModifiedTime =  "tag_modified_time";
 
     private static final String serverItemCode = "CODE";
-    private static final String serverCreatedDate = "TRADE_CREATED";
-    private static final String serverStatusHitory = "TYPE";
+    private static final String serverCreatedDate = "CREATED";
+    private static final String serverStatusHistory = "STATUS";
     private static final String serverCompanyName = "NAME";
 
     private static final String statusUnregistered = "n";
@@ -85,7 +87,11 @@ public class Constant {
     private static final String searchedItemCategory = "CATEGORY_NAME";
     private static final String searchedItemSubCategory = "SUB_CATEGORY_NAME";
     private static final String searchedItemUnit ="UNIT";
-    private static final String searchedItemAmount ="AMOUNT";
+    private static final String searchedItemStandard ="AMOUNT";
+    private static final String searchedItemAmount ="ITEM_COUNT";
+
+    private static final String itemHistoryTradeCode = "CODE";
+    private static final String itemHistoryStatus = "STATUS";
 
 
     private static final HashMap<String,String> enumToStatus = new HashMap<String,String>() {
@@ -123,6 +129,14 @@ public class Constant {
 
     public static String getQueryGetItemHistoryParameter() {
         return queryGetItemHistoryParameter;
+    }
+
+    public static String getQueryGetTradeHistory() {
+        return queryGetTradeHistory;
+    }
+
+    public static String getQueryGetTradeHistoryParameter() {
+        return queryGetTradeHistoryParameter;
     }
 
     public static String getQueryTradeStatusUpdate() {
@@ -197,8 +211,8 @@ public class Constant {
         return serverCompanyName;
     }
 
-    public static String getServerStatusHitory() {
-        return serverStatusHitory;
+    public static String getServerStatusHistory() {
+        return serverStatusHistory;
     }
 
     public static String getServerCreatedDate() {
@@ -297,6 +311,10 @@ public class Constant {
         return searchedItemUnit;
     }
 
+    public static String getSearchedItemStandard() {
+        return searchedItemStandard;
+    }
+
     public static String getSearchedItemAmount() {
         return searchedItemAmount;
     }
@@ -333,4 +351,11 @@ public class Constant {
         Constant.sqluserTableName = sqluserTableName;
     }
 
+    public static String getItemHistoryTradeCode() {
+        return itemHistoryTradeCode;
+    }
+
+    public static String getItemHistoryStatus() {
+        return itemHistoryStatus;
+    }
 }

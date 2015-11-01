@@ -45,16 +45,19 @@ public class receiveTradeInformationHandler extends JsonHttpResponseHandler {
     public receiveTradeInformationHandler(Context context) {
         this.context = context;
         allCheckBox = (CheckBox)((Activity) context).findViewById(R.id.ckbox_allcheck);
-        allCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                for( int i = 0 ; i < itemDAOArrayList.size() ; i++ ) {
-                    itemDAOArrayList.get(i).setIsSelected(isChecked);
+        if (((Activity)context).getLocalClassName().compareTo("TagReadActivity") == 0 ||
+                ((Activity)context).getLocalClassName().compareTo("TagWriteActivity") == 0 ) {
+            allCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    for( int i = 0 ; i < itemDAOArrayList.size() ; i++ ) {
+                        itemDAOArrayList.get(i).setIsSelected(isChecked);
+                    }
+                    ((ItemDAOListViewAdapter)itemListView.getAdapter()).notifyDataSetChanged();
+                    itemListView.invalidate();
                 }
-                ((ItemDAOListViewAdapter)itemListView.getAdapter()).notifyDataSetChanged();
-                itemListView.invalidate();
-            }
-        });
+            });
+        }
     }
 
     public ArrayList<itemDAO> getItemDAOArrayList() {

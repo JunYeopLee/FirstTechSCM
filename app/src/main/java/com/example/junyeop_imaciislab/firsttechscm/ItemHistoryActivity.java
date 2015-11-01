@@ -28,7 +28,7 @@ import cz.msebera.android.httpclient.client.CookieStore;
 import cz.msebera.android.httpclient.cookie.Cookie;
 
 public class ItemHistoryActivity extends Activity {
-    private String itemCode;
+    private String tradeCode;
     private ArrayList<itemHistoryDAO> itemHistoryDAOArrayList;
     private ListView itemHistoryListView;
     private ItemHistoryListViewAdapter itemHistoryListViewAdapter;
@@ -45,10 +45,10 @@ public class ItemHistoryActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        //itemCode = getItemCode();
-        itemCode = "I1510141"; // For Test
+        tradeCode = getTradeCode();
+        //tradeCode = "I1510141"; // For Test
         context = this;
-        getItemHistoryDAOListFromServer(itemCode);
+        getTradeHistoryDAOListFromServer(tradeCode);
     }
 
     @Override
@@ -62,18 +62,18 @@ public class ItemHistoryActivity extends Activity {
         this.onBackPressed();
     }
 
-    private String getItemCode() {
-        if(!getIntent().hasExtra("ItemCode")) {
+    private String getTradeCode() {
+        if(!getIntent().hasExtra("tradeCode")) {
             AlertDialog.Builder alert = new AlertDialog.Builder(ItemHistoryActivity.this);
             alert.setMessage("잘못된 접근 입니다").show();
             finish();
             return null;
         }
-        return getIntent().getExtras().getString("ItemCode");
+        return getIntent().getExtras().getString("tradeCode");
     }
 
 
-    private void getItemHistoryDAOListFromServer(String itemCode) {
+    private void getTradeHistoryDAOListFromServer(String tradeCode) {
         // Get connection and set params
         AsyncHttpClient client = new AsyncHttpClient();
 
@@ -89,7 +89,7 @@ public class ItemHistoryActivity extends Activity {
             }
         }
         // Execute query for tag information and getItemDAOArrayList from server
-        String query = Constant.getQueryGetItemHistory().replace(Constant.getQueryGetItemHistoryParameter(), itemCode);
+        String query = Constant.getQueryGetTradeHistory().replace(Constant.getQueryGetTradeHistoryParameter(), tradeCode);
         client.get(query,new receiveItemHistoryHandler());
     }
 
@@ -108,15 +108,15 @@ public class ItemHistoryActivity extends Activity {
             // called when response HTTP status is "200 OK"
             try {
                 if(response.getBoolean("success")) {
-                    JSONArray jsonArray = response.getJSONArray("result");
+                    JSONArray jsonArray = response.getJSONObject("result").getJSONArray("history");
                     itemHistoryDAOArrayList = new ArrayList<>();
                     for( int i  = 0 ; i < jsonArray.length() ; i++ ) { // get trade information
                         itemHistoryDAO itemHistoryDAOObject = new itemHistoryDAO();
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
-                        itemHistoryDAOObject.setItemCode(jsonObject.getString(Constant.getServerItemCode()));
-                        itemHistoryDAOObject.setCompanyName(jsonObject.getString(Constant.getServerCompanyName()));
+                        //itemHistoryDAOObject.setItemCode(jsonObject.getString(Constant.getServerItemCode()));
+                        //itemHistoryDAOObject.setCompanyName(jsonObject.getString(Constant.getServerCompanyName()));
                         itemHistoryDAOObject.setCreatedDate(jsonObject.getString(Constant.getServerCreatedDate()));
-                        itemHistoryDAOObject.setItemStatus(jsonObject.getString(Constant.getServerStatusHitory()));
+                        itemHistoryDAOObject.setItemStatus(jsonObject.getString(Constant.getServerStatusHistory()));
                         itemHistoryDAOArrayList.add(itemHistoryDAOObject);
                     }
                     itemHistoryListViewAdapter = new ItemHistoryListViewAdapter((Activity)context,itemHistoryDAOArrayList);

@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.widget.ListView;
 
+import com.example.junyeop_imaciislab.firsttechscm.InventoryDetailActivity;
 import com.example.junyeop_imaciislab.firsttechscm.R;
 import com.example.junyeop_imaciislab.firsttechscm.adapter.ItemDAOListViewAdapter;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -28,6 +29,9 @@ public class receiveInventoryDetailHandler extends JsonHttpResponseHandler {
     private ProgressDialog dialog;
     private Context context;
     private ArrayList<itemDAO> inventoryDetailList = new ArrayList<>();
+    private ArrayList<itemDAO> allTradeList = new ArrayList<>();
+    private ArrayList<String> tradeCodeList = new ArrayList<>();
+    private checkInventoryDAO checkInventoryDAO;
     private ListView inventoryDetailListView;
 
     public receiveInventoryDetailHandler(Context context) {
@@ -46,12 +50,33 @@ public class receiveInventoryDetailHandler extends JsonHttpResponseHandler {
         try {
             if(response.getBoolean("success")) {
                 inventoryDetailList = new ArrayList<>();
-                JSONArray jsonArray = response.getJSONObject("result").getJSONArray("data");
+                tradeCodeList = new ArrayList<>();
+                allTradeList = ((InventoryDetailActivity)context).getAllTradeList();
+                checkInventoryDAO = ((InventoryDetailActivity)context).getCheckInventoryDAOObject();
+
+                JSONArray jsonArray = response.getJSONArray("result");
                 for( int i  = 0 ; i < jsonArray.length() ; i++ ) { // get trade information
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
-                    itemDAO itemDAOObject = convertJsonObjectToitemDAO(jsonObject);
-                    inventoryDetailList.add(itemDAOObject);
+                    if(jsonObject.getString(Constant.getItemHistoryStatus()).compareTo("s")==0) {
+                        tradeCodeList.add(jsonObject.getString(Constant.getItemHistoryTradeCode()));
+                    }
                 }
+                String tradeCode;
+                itemDAO itemDAOObject;
+                for( int i = 0 ; i < tradeCodeList.size() ; i++ ) {
+                    tradeCode = tradeCodeList.get(i);
+                    for( int j = 0 ; j < allTradeList.size() ; j++ ) {
+                        if(tradeCode.compareTo(allTradeList.get(j).getTradeCode())==0) {
+                            itemDAOObject = new itemDAO(allTradeList.get(j));
+                            itemDAOObject.setStandard(checkInventoryDAO.getStandard());
+                            itemDAOObject.setUnit(checkInventoryDAO.getUnit());
+                            itemDAOObject.setCategory(checkInventoryDAO.getCategory());
+                            inventoryDetailList.add(itemDAOObject);
+                            break;
+                        }
+                    }
+                }
+
                 Collections.sort(inventoryDetailList, new Comparator<itemDAO>() {
                     @Override
                     public int compare(itemDAO p1, itemDAO p2) {
@@ -60,7 +85,7 @@ public class receiveInventoryDetailHandler extends JsonHttpResponseHandler {
                 });
                 if (((Activity)context).getLocalClassName().compareTo("InventoryDetailActivity") == 0 ) {
                     ItemDAOListViewAdapter itemDAOListViewAdapter = new ItemDAOListViewAdapter(((Activity)context),inventoryDetailList);
-                    inventoryDetailListView = (ListView)((Activity) context).findViewById(R.id.listview_tagitem);
+                    inventoryDetailListView = (ListView)((Activity) context).findViewById(R.id.listview_detail_item);
                     inventoryDetailListView.setAdapter(itemDAOListViewAdapter);
                     inventoryDetailListView.invalidate();
                 }
@@ -95,22 +120,4 @@ public class receiveInventoryDetailHandler extends JsonHttpResponseHandler {
         return inventoryDetailList;
     }
 
-    private itemDAO convertJsonObjectToitemDAO(JSONObject jsonObject) throws JSONException {
-        itemDAO itemDAOObject = new itemDAO();
-        itemDAOObject.setItemName(jsonObject.getString(Constant.getServerItemName()));
-        itemDAOObject.setItemStatus(jsonObject.getString(Constant.getServerItemStatus()));
-        itemDAOObject.setCategory(jsonObject.getString(Constant.getServerCategory()));
-        itemDAOObject.setExpirydate(jsonObject.getString(Constant.getServerExpiryDate()));
-        itemDAOObject.setStandard(jsonObject.getString(Constant.getServerStandard()));
-        itemDAOObject.setUnit(jsonObject.getString(Constant.getServerUnit()));
-        itemDAOObject.setAmount(jsonObject.getString(Constant.getServerAmount()));
-        itemDAOObject.setPrice(jsonObject.getString(Constant.getServerPrice()));
-        itemDAOObject.setLocation(jsonObject.getString(Constant.getServerLocation()));
-        itemDAOObject.setCustomer(jsonObject.getString(Constant.getServerCustomer()));
-        itemDAOObject.setTradeCode(jsonObject.getString(Constant.getServerTradeCode()));
-        itemDAOObject.setItemCode(jsonObject.getString(Constant.getServerItemCodeInTag()));
-        itemDAOObject.setTagID(jsonObject.getString(Constant.getServerTagID()));
-        itemDAOObject.setIsSelected(false);
-        return itemDAOObject;
-    }
 }

@@ -1,6 +1,7 @@
 package com.example.junyeop_imaciislab.firsttechscm;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,8 @@ import android.widget.ListView;
 
 import com.example.junyeop_imaciislab.firsttechscm.util.Constant;
 import com.example.junyeop_imaciislab.firsttechscm.util.checkInventoryDAO;
+import com.example.junyeop_imaciislab.firsttechscm.util.itemDAO;
+import com.example.junyeop_imaciislab.firsttechscm.util.receiveAllTradeHandler;
 import com.example.junyeop_imaciislab.firsttechscm.util.receiveSearchedItemHandler;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.PersistentCookieStore;
@@ -26,6 +29,9 @@ import cz.msebera.android.httpclient.cookie.Cookie;
 public class CheckInventoryActivity extends AppCompatActivity {
     private ArrayList<checkInventoryDAO> checkInventoryDAOArrayList;
     private String NFCtagID;
+    private Context context;
+    private ArrayList<itemDAO> allTradeList = new ArrayList<>();
+
     @InjectView(R.id.edit_search_inventory)
     public EditText searchEditText;
     @InjectView(R.id.listview_inventory_item)
@@ -36,6 +42,8 @@ public class CheckInventoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_check_inventory);
         ButterKnife.inject(this);
+        context = this;
+        getAllTradeFromServer();
     }
     @Override
     protected void onResume() {
@@ -67,6 +75,21 @@ public class CheckInventoryActivity extends AppCompatActivity {
         getCookieFromStore(client);
         client.get(Constant.getQuerySearchItem(), requestParams, receiveSearchedItemHandler);
         findViewById(R.id.listview_inventory_item).setVisibility(View.VISIBLE);
+    }
+
+    private void getAllTradeFromServer() {
+        AsyncHttpClient client = new AsyncHttpClient();
+        getCookieFromStore(client);
+        String query = Constant.getServerURL()+"trade";
+        client.get(query, new receiveAllTradeHandler(context));
+    }
+
+    public ArrayList<itemDAO> getAllTradeList() {
+        return allTradeList;
+    }
+
+    public void setAllTradeList(ArrayList<itemDAO> allTradeList) {
+        this.allTradeList = allTradeList;
     }
 
     private void getCookieFromStore(AsyncHttpClient client) {
