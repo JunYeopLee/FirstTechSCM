@@ -48,7 +48,7 @@ public class Constant {
     private static final String serverItemCode = "CODE";
     private static final String serverCreatedDate = "CREATED";
     private static final String serverStatusHistory = "STATUS";
-    private static final String serverCompanyName = "NAME";
+    private static final String serverCompanyName = "company_name";
 
     private static final String statusUnregistered = "n";
     private static final String statusStocked = "s";

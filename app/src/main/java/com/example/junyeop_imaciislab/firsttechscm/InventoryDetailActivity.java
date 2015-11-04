@@ -16,7 +16,6 @@ import android.widget.TextView;
 import com.example.junyeop_imaciislab.firsttechscm.util.Constant;
 import com.example.junyeop_imaciislab.firsttechscm.util.checkInventoryDAO;
 import com.example.junyeop_imaciislab.firsttechscm.util.itemDAO;
-import com.example.junyeop_imaciislab.firsttechscm.util.receiveAllTradeHandler;
 import com.example.junyeop_imaciislab.firsttechscm.util.receiveInventoryDetailHandler;
 import com.example.junyeop_imaciislab.firsttechscm.util.receiveTradeInformationHandler;
 import com.example.junyeop_imaciislab.firsttechscm.util.sendCreateTagsTradeHandler;
@@ -136,8 +135,18 @@ public class InventoryDetailActivity extends AppCompatActivity {
                 searchedItemDAOArrayList = searchedItemDAOArrayListHandler.getInventoryDetailList();
                 prevItemDAOArrayList = prevItemDAOArrayListHandler.getItemDAOArrayList();
 
-                String tradeCode = "", tagID="";
+                String tradeCode = "", tagID = "", pCode, sCode;
                 itemDAO itemDAOObject;
+                for (int i = 0; i < prevItemDAOArrayList.size(); i++) {
+                    pCode = prevItemDAOArrayList.get(i).getTradeCode();
+                    for (int j = 0; j < searchedItemDAOArrayList.size(); j++) {
+                        sCode = searchedItemDAOArrayList.get(j).getTradeCode();
+                        if(pCode.compareTo(sCode)==0) {
+                            searchedItemDAOArrayList.get(j).setIsSelected(false);
+                        }
+                    }
+                }
+
                 for (int i = 0; i < prevItemDAOArrayList.size(); i++) {
                     itemDAOObject = prevItemDAOArrayList.get(i);
                     tradeCode += itemDAOObject.getTradeCode();
@@ -154,6 +163,7 @@ public class InventoryDetailActivity extends AppCompatActivity {
                         added = true;
                     }
                 }
+
                 if (added) tradeCode = tradeCode.substring(0, tradeCode.lastIndexOf(","));
                 else return;
 

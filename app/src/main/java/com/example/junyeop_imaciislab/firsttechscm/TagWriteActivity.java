@@ -112,7 +112,7 @@ public class TagWriteActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_add_item)
     public void callCheckInventory() {
-        //if(checkIsItValidTime()==false) {return;}
+        if(checkIsItValidTime()==false) {return;}
         Intent intent = new Intent(TagWriteActivity.this, CheckInventoryActivity.class);
         intent.putExtra("activityFrom", "TagWriteActivity");
         intent.putExtra("NFCtagID",NFCtagID);
@@ -121,7 +121,7 @@ public class TagWriteActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_del_selected)
     public void onClickDelSelected() {
-        //if(checkIsItValidTime()==false) {return;}
+        if(checkIsItValidTime()==false) {return;}
         AlertDialog.Builder ab = new AlertDialog.Builder(this);
         final AlertDialog dialog = null;
         ab.setMessage("선택 하신 상품들을 삭제 하시겠습니까?");

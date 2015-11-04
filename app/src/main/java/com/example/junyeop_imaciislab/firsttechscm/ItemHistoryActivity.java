@@ -114,7 +114,7 @@ public class ItemHistoryActivity extends Activity {
                         itemHistoryDAO itemHistoryDAOObject = new itemHistoryDAO();
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
                         //itemHistoryDAOObject.setItemCode(jsonObject.getString(Constant.getServerItemCode()));
-                        //itemHistoryDAOObject.setCompanyName(jsonObject.getString(Constant.getServerCompanyName()));
+                        itemHistoryDAOObject.setCompanyName(jsonObject.getString(Constant.getServerCompanyName()));
                         itemHistoryDAOObject.setCreatedDate(jsonObject.getString(Constant.getServerCreatedDate()));
                         itemHistoryDAOObject.setItemStatus(jsonObject.getString(Constant.getServerStatusHistory()));
                         itemHistoryDAOArrayList.add(itemHistoryDAOObject);
