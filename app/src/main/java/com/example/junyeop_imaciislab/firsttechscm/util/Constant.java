@@ -31,7 +31,7 @@ public class Constant {
     private static final String querySearchItem = serverURL+"/item";
 
     private static final String serverItemName = "ITEM_NAME";
-    private static final String serverItemStatus = "STATUS";
+    private static final String serverItemStatus = "status";
     private static final String serverCategory = "NAME";
     private static final String serverExpiryDate = "VALID_TIME";
     private static final String serverStandard = "AMOUNT";
@@ -47,7 +47,7 @@ public class Constant {
 
     private static final String serverItemCode = "CODE";
     private static final String serverCreatedDate = "CREATED";
-    private static final String serverStatusHistory = "STATUS";
+    private static final String serverStatusHistory = "status";
     private static final String serverCompanyName = "company_name";
 
     private static final String statusUnregistered = "n";
@@ -91,7 +91,7 @@ public class Constant {
     private static final String searchedItemAmount ="ITEM_COUNT";
 
     private static final String itemHistoryTradeCode = "CODE";
-    private static final String itemHistoryStatus = "STATUS";
+    private static final String itemHistoryStatus = "status";
 
 
     private static final HashMap<String,String> enumToStatus = new HashMap<String,String>() {
